@@ -117,7 +117,7 @@ meter {
   font-family: "IconFont";
   font-style: normal;
   font-weight: normal;
-  src: url("/assets/fonts/icon-font.woff2") format("woff2"), url("/assets/fonts/icon-font.ttf") format("truetype");
+  src: url("../../fonts/icon-font.woff2") format("woff2"), url("../../fonts/icon-font.ttf") format("truetype");
 }
 button {
   align-items: center;
