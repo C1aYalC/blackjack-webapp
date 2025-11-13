@@ -1,0 +1,59 @@
+.toast {
+    align-items: center;
+    border-radius: .5rem;
+    border: none;
+    cursor: pointer;
+    display: grid;
+    font-size: 1.125rem;
+    font-weight: bold;
+    gap: .5rem;
+    grid-template-columns: auto 1fr;
+    justify-items: center;
+    justify-self: center;
+    opacity: 0;
+    padding: 1rem;
+    pointer-events: auto;
+    position: fixed;
+    text-align: center;
+    top: 25%;
+    transition: all 0.5s ease;
+    user-select: none;
+    visibility: hidden;
+    width: calc(100vw - 1rem);
+    z-index: 2000;
+
+    &:active {
+        cursor: grabbing;
+    }
+
+    &.bust,
+    &.dealer-wins {
+        background-color: var(--accentColor);
+        color: var(--offWhite);
+    }
+
+    &.push {
+        background-color: var(--primaryGoldLighten);
+        color: var(--primaryGoldDarken);
+    }
+
+    &.show {
+        opacity: 1;
+        pointer-events: auto;
+        visibility: visible;
+    }
+
+    &.swiping {
+        transition: none;
+    }
+
+    &.victory {
+        background-color: var(--primaryGreen);
+        color: var(--offWhite);
+    }
+
+    span {
+        font-size: 1.5rem;
+        line-height: 1;
+    }
+}

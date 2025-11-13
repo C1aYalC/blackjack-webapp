@@ -1,0 +1,70 @@
+button {
+    align-items: center;
+    border-radius: .25rem;
+    border: 2px solid transparent;
+    cursor: pointer;
+    display: grid;
+    font-weight: 500;
+    gap: .5rem;
+    grid-template-columns: auto 1fr;
+    justify-content: center;
+    padding: 1rem 1.5rem;
+    transition: .25s ease all;
+
+    &.smallButton {
+        font-size: .875rem;
+        gap: .25rem;
+        padding: .5rem 1rem;
+    }
+
+    &.primaryButton {
+        background-color: var(--primaryGreen);
+        color: var(--offWhite);
+
+        &:hover {
+            background-color: var(--primaryGreenDarken);
+        }
+
+        &:active {
+            background-color: var(--primaryGreenDarken50);
+        }
+    }
+
+    &.secondaryButton {
+        background-color: var(--offWhite);
+        border: 2px solid var(--primaryGreen);
+        color: var(--primaryGreen);
+
+        &:hover {
+            background-color: var(--primaryGreen);
+            border-color: transparent;
+            color: var(--offWhite);
+        }
+
+        &:active {
+            background-color: var(--primaryGreenDarken);
+        }
+    }
+
+    &.tertiaryButton {
+        background-color: var(--primaryGreenDarken);
+        color: var(--offWhite);
+
+        &:hover {
+            background-color: var(--offWhite);
+            border-color: var(--primaryGreen);
+            color: var(--primaryGreen);
+        }
+
+        &:active {
+            background-color: var(--primaryGreen);
+            color: var(--offWhite);
+        }
+    }
+
+    &:disabled {
+        background-color: var(--neutralGray);
+        color: var(--neutralGrayDarken);
+        cursor: not-allowed;
+    }
+}

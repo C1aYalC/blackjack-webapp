@@ -1,0 +1,97 @@
+span {
+    &::before {
+        font-family: 'IconFont';
+    }
+}
+
+.bustIcon {
+    &::before {
+        content: '\e4dc';
+    }
+}
+
+.cardIcon {
+    &::before {
+        content: '\e4df';
+    }
+}
+
+.coinIcon {
+    &::before {
+        content: '\f51e';
+    }
+}
+
+.chipIcon {
+    &::before {
+        content: '\f85c';
+    }
+}
+
+.closeIcon {
+    &::before {
+        content: '\f057';
+    }
+}
+
+.clubIcon {
+    &::before {
+        content: '\f327';
+    }
+}
+
+.diamondIcon {
+    &::before {
+        color: var(--accentColor);
+        content: '\e23b';
+    }
+}
+
+.flagIcon {
+    &::before {
+        content: '\f024';
+    }
+}
+
+.heartIcon {
+    &::before {
+        color: var(--accentColor);
+        content: '\f004';
+    }
+}
+
+.heartBreakIcon {
+    &::before {
+        content: '\f7a9';
+    }
+}
+
+.moneySackIcon {
+    &::before {
+        content: '\f81d';
+    }
+}
+
+.rulesIcon {
+    &::before {
+        content: '\f02e';
+    }
+}
+
+.statsIcon {
+    &::before {
+        content: '\e473';
+    }
+}
+
+.spadeIcon {
+    &::before {
+        content: '\f2f4';
+    }
+}
+
+.sparkleIcon {
+    &::before {
+        content: '\f890';
+    }
+}

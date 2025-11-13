@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Blackjack</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="assets/styles/css/main.min.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+        <script src="assets/scripts/logic.js" defer></script>
+    </head>
+    <body>
+        <main>
+            <header>
+                <div class="currentChipTotal">
+                    <span class="coinIcon"></span>
+                    <p id="balance">10000</p>
+                </div>
+                <div class="buttonContainer">
+                    <button class="primaryButton smallButton playerStats" onclick="showStatsFromBet()">
+                        <span class="statsIcon"></span>
+                        <p>Stats</p>
+                    </button>
+                    <button class="tertiaryButton smallButton gameRules" onclick="showRulesFromBet()">
+                        <span class="rulesIcon"></span>
+                        <p>Rules</p>
+                    </button>
+                </div>
+            </header>
+            <section class="container dealerArea playField">
+                <div class="handDetails">
+                    <div class="sectionLabel">
+                        <p>Dealer's Hand</p>
+                    </div>
+                    <div class="sectionCardTotal">
+                        <span class="cardIcon"></span>
+                        <p id="dealer-value">6</p>
+                    </div>
+                </div>
+                <div class="cardsContainer">
+                    <div class="cardContainer" id="dealer-cards"></div>
+                </div>
+            </section>
+            <section class="container playerArea playField">
+                <div class="cardsContainer">
+                    <div class="cardContainer" id="player-cards"></div>
+                </div>
+                <div class="handDetails">
+                    <div class="sectionLabel">
+                        <p>Your Hand</p>
+                    </div>
+                    <div class="sectionCardTotal">
+                        <span class="cardIcon"></span>
+                        <p id="player-value">18</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <div class="container playerActions">
+            <div class="buttonContainer">
+                <button class="primaryButton" id="hitButton" onclick="hit()">Hit</button>
+                <button class="secondaryButton" id="standButton" onclick="stand()">Stand</button>
+                <button class="tertiaryButton" id="doubleButton" onclick="doubleDown()">Double Down</button>
+            </div>
+            <div class="quickTips">
+                <div class="quickTipsHeader">
+                    <span class="sparkleIcon"></span>
+                    <p class="smallHeader">Quick Tip</p>
+                </div>
+                <p class="randomQuickTip">The dealer is required to <strong>hit</strong> on any total of 16 or less and must <strong>stand</strong> once they reach 17 or higher.</p>
+            </div>
+        </div>
+
+        <div class="modal active" id="bet-modal">
+            <div class="modal-content">
+                <div class="bet-modal-header">
+                    <div class="bet-modal-chip-balance">
+                        <span class="coinIcon"></span>
+                        <p class="bet-modal-chips"><span id="bet-modal-balance">10000</span></p>
+                    </div>
+                    <div class="bet-modal-stats-rules">
+                        <button class="primaryButton smallButton playerStats" onclick="showStatsFromBet()" title="Statistics">
+                            <span class="statsIcon"></span>
+                        </button>
+                        <button class="tertiaryButton smallButton gameRules" onclick="showRulesFromBet()" title="Rules">
+                            <span class="rulesIcon"></span>
+                        </button>
+                    </div>
+                </div>
+                <div class="bet-modal-content">
+                    <div class="bet-modal-text-block">
+                        <p class="bet-modal-title">Place Your Bets</p>
+                        <p class="bet-modal-subtitle">The minimum bet is <strong>500</strong> chips</p>
+                    </div>
+                    <div class="bet-input-container">
+                        <input type="number" id="bet-modal-input" class="bet-modal-input" placeholder="Minimum bet is 500 Chips" min="500" step="100" value="500">
+                        <button class="primaryButton" onclick="placeBet()">
+                            <span class="chipIcon"></span>
+                            <p>Bet</p>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistics Modal -->
+        <div class="modal" id="stats-modal">
+            <div class="modal-content">
+                <div class="stats-header">
+                    <h2>📊 Player Stats</h2>
+                    <span class="closeIcon" onclick="closeStats()"></span>
+                </div>
+                <div class="stats-grid">
+                    <div class="stats-item">
+                        <div class="stats-item-label">Wins</div>
+                        <div class="stats-item-value" id="stat-wins">0</div>
+                    </div>
+                    <div class="stats-item">
+                        <div class="stats-item-label">Losses</div>
+                        <div class="stats-item-value" id="stat-losses">0</div>
+                    </div>
+                    <div class="stats-item">
+                        <div class="stats-item-label">Busts</div>
+                        <div class="stats-item-value" id="stat-busts">0</div>
+                    </div>
+                    <div class="stats-item">
+                        <div class="stats-item-label">Natural Blackjacks</div>
+                        <div class="stats-item-value" id="stat-blackjacks">0</div>
+                    </div>
+                    <div class="stats-item">
+                        <div class="stats-item-label">Pushes</div>
+                        <div class="stats-item-value" id="stat-pushes">0</div>
+                    </div>
+                    <div class="stats-item">
+                        <div class="stats-item-label">Total Chips Won</div>
+                        <div class="stats-item-value positive" id="stat-won">0</div>
+                    </div>
+                    <div class="stats-item">
+                        <div class="stats-item-label">Total Chips Lost</div>
+                        <div class="stats-item-value negative" id="stat-lost">0</div>
+                    </div>
+                </div>
+                <div class="stats-footer">
+                    <div class="stats-footer-label">Current Chips</div>
+                    <div class="stats-footer-value" id="stat-balance">10000</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rules Modal -->
+        <div class="modal" id="rules-modal">
+            <div class="modal-content">
+                <div class="rules-header">
+                    <h2>📊 Rules</h2>
+                    <span class="closeIcon" onclick="closeRules()"></span>
+                </div>
+                <div class="rules-content">
+                    <h3>Objective:</h3>
+                    <p>Beat the dealer by getting as close to 21 as possible without going over.</p>
+                    
+                    <h3>Card Values:</h3>
+                    <ul>
+                        <li>Number cards (2-10): Face value</li>
+                        <li>Face cards (J, Q, K): Worth 10</li>
+                        <li>Ace: Worth 1 or 11 (whichever is better)</li>
+                    </ul>
+                    
+                    <h3>How to Play:</h3>
+                    <ul>
+                        <li>Place your bet (minimum 500 Chips)</li>
+                        <li>You and the dealer each get 2 cards</li>
+                        <li>One of the dealer's cards is hidden</li>
+                        <li><strong>Hit:</strong> Take another card</li>
+                        <li><strong>Stand:</strong> Keep your current hand</li>
+                        <li><strong>Double Down:</strong> Double your bet and take one final card</li>
+                    </ul>
+                    
+                    <h3>Winning:</h3>
+                    <ul>
+                        <li>Get closer to 21 than the dealer without busting</li>
+                        <li>Dealer must hit on 16 or less, stand on 17 or more</li>
+                        <li>Bust (over 21) = automatic loss</li>
+                        <li>Blackjack (21 with 2 cards) pays 1.5x your bet</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast Notification -->
+        <div class="toast" id="toast"></div>
+    </body>
+</html>
