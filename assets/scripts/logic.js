@@ -337,7 +337,6 @@ function determineWinner() {
 
 function endGame(outcome, winAmount = 0, extraMessage = '') {
     gameActive = false;
-    let playerValue = document.getElementById('player-value').textContent;
 
     if (outcome === 'bust') {
         stats.busts++;
