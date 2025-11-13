@@ -5,15 +5,6 @@
 @use '../scss/betModal';
 @use '../scss/toast';
 
-@font-face {
-    font-display: swap;
-    font-family: 'IconFont';
-    font-style: normal;
-    font-weight: normal;
-    src: url('/assets/fonts/icon-font.woff2') format('woff2'),
-         url('/assets/fonts/icon-font.ttf') format('truetype');
-}
-
 html {
     background-color: var(--offWhite);
     color: var(--offBlack);
