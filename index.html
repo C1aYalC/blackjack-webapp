@@ -13,6 +13,38 @@
         <script src="assets/scripts/logic.js" defer></script>
     </head>
     <body>
+        <div class="modal active" id="bet-modal">
+            <div class="modal-content">
+                <div class="bet-modal-header">
+                    <div class="bet-modal-chip-balance">
+                        <span class="coinIcon"></span>
+                        <p class="bet-modal-chips"><span id="bet-modal-balance">10000</span></p>
+                    </div>
+                    <div class="bet-modal-stats-rules">
+                        <button class="primaryButton smallButton playerStats" onclick="showStatsFromBet()" title="Statistics">
+                            <span class="statsIcon"></span>
+                        </button>
+                        <button class="tertiaryButton smallButton gameRules" onclick="showRulesFromBet()" title="Rules">
+                            <span class="rulesIcon"></span>
+                        </button>
+                    </div>
+                </div>
+                <div class="bet-modal-content">
+                    <div class="bet-modal-text-block">
+                        <p class="bet-modal-title">Place Your Bets</p>
+                        <p class="bet-modal-subtitle">The minimum bet is <strong>500</strong> chips</p>
+                    </div>
+                    <div class="bet-input-container">
+                        <input type="number" id="bet-modal-input" class="bet-modal-input" placeholder="Minimum bet is 500 Chips" min="500" step="100" value="500">
+                        <button class="primaryButton" onclick="placeBet()">
+                            <span class="chipIcon"></span>
+                            <p>Bet</p>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <main>
             <header>
                 <div class="currentChipTotal">
@@ -71,38 +103,6 @@
                     <p class="smallHeader">Quick Tip</p>
                 </div>
                 <p class="randomQuickTip">The dealer is required to <strong>hit</strong> on any total of 16 or less and must <strong>stand</strong> once they reach 17 or higher.</p>
-            </div>
-        </div>
-
-        <div class="modal active" id="bet-modal">
-            <div class="modal-content">
-                <div class="bet-modal-header">
-                    <div class="bet-modal-chip-balance">
-                        <span class="coinIcon"></span>
-                        <p class="bet-modal-chips"><span id="bet-modal-balance">10000</span></p>
-                    </div>
-                    <div class="bet-modal-stats-rules">
-                        <button class="primaryButton smallButton playerStats" onclick="showStatsFromBet()" title="Statistics">
-                            <span class="statsIcon"></span>
-                        </button>
-                        <button class="tertiaryButton smallButton gameRules" onclick="showRulesFromBet()" title="Rules">
-                            <span class="rulesIcon"></span>
-                        </button>
-                    </div>
-                </div>
-                <div class="bet-modal-content">
-                    <div class="bet-modal-text-block">
-                        <p class="bet-modal-title">Place Your Bets</p>
-                        <p class="bet-modal-subtitle">The minimum bet is <strong>500</strong> chips</p>
-                    </div>
-                    <div class="bet-input-container">
-                        <input type="number" id="bet-modal-input" class="bet-modal-input" placeholder="Minimum bet is 500 Chips" min="500" step="100" value="500">
-                        <button class="primaryButton" onclick="placeBet()">
-                            <span class="chipIcon"></span>
-                            <p>Bet</p>
-                        </button>
-                    </div>
-                </div>
             </div>
         </div>
 
