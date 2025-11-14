@@ -238,6 +238,10 @@ span::before {
   content: "\f7a9";
 }
 
+.moneyHandsIcon::before {
+  content: "\f4c5";
+}
+
 .moneySackIcon::before {
   content: "\f81d";
 }
@@ -437,6 +441,10 @@ span::before {
   background-color: var(--accentColor);
   color: var(--offWhite);
 }
+.toast.chips-added {
+  background-color: var(--primaryGoldLighten);
+  color: var(--primaryGoldDarken);
+}
 .toast.push {
   background-color: var(--primaryGoldLighten);
   color: var(--primaryGoldDarken);
@@ -502,6 +510,7 @@ header .currentChipTotal {
   gap: 0.5rem;
   justify-content: center;
   padding: 0.5rem;
+  position: relative;
   text-align: center;
   width: 100%;
 }
@@ -509,8 +518,15 @@ header .currentChipTotal p {
   font-size: 1.25rem;
   font-weight: 700;
 }
-header .currentChipTotal .chipIcon::before {
+header .currentChipTotal .coinIcon::before,
+header .currentChipTotal .plusIcon::before {
   font-size: 1.25rem;
+}
+header .currentChipTotal .plusIcon {
+  align-self: center;
+  display: grid;
+  position: absolute;
+  right: 0.5rem;
 }
 
 .container {

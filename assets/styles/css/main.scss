@@ -50,6 +50,7 @@ header {
         gap: .5rem;
         justify-content: center;
         padding: .5rem;
+        position: relative;
         text-align: center;
         width: 100%;
 
@@ -58,10 +59,18 @@ header {
             font-weight: 700;
         }
 
-        .chipIcon {
+        .coinIcon,
+        .plusIcon {
             &::before {
                 font-size: 1.25rem;
             }
+        }
+
+        .plusIcon {
+            align-self: center;
+            display: grid;
+            position: absolute;
+            right: .5rem;
         }
     }
 }

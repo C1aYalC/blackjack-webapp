@@ -32,6 +32,11 @@
         color: var(--offWhite);
     }
 
+    &.chips-added {
+        background-color: var(--primaryGoldLighten);
+        color: var(--primaryGoldDarken);
+    }
+
     &.push {
         background-color: var(--primaryGoldLighten);
         color: var(--primaryGoldDarken);

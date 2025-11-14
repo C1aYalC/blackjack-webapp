@@ -670,7 +670,7 @@ function _scheduleAddChipsToast(amount) {
         clearTimeout(_addChipsToastTimer);
     }
     _addChipsToastTimer = setTimeout(() => {
-        showToast('victory', `<span class="moneySackIcon"></span><p>Added ${_addChipsToastPending.toLocaleString()} chips!</p>`);
+        showToast('chips-added', `<span class="moneyHandsIcon"></span><p>Added ${_addChipsToastPending.toLocaleString()} chips!</p>`);
         _addChipsToastPending = 0;
         _addChipsToastTimer = null;
     }, ADD_CHIPS_TOAST_DEBOUNCE);

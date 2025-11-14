@@ -84,6 +84,12 @@ span {
     }
 }
 
+.moneyHandsIcon {
+    &::before {
+        content: '\f4c5';
+    }
+}
+
 .moneySackIcon {
     &::before {
         content: '\f81d';
