@@ -230,18 +230,18 @@ function placeBet() {
                 if (dealerBlackjack && playerBlackjack) {
                     stats.pushes++;
                     updateStatsDisplay();
-                    endGame('push', currentBet, 'Both have Blackjack!');
+                    endGame('push', currentBet, '<span class="pushIcon"></span><p>Two natural Blackjacks!? Crazy.</p>');
                 } else if (dealerBlackjack) {
                     stats.losses++;
                     stats.totalLost += currentBet;
                     updateStatsDisplay();
-                    endGame('dealer-wins', 0, '<span class="blackjackIcon"></span><p>Bummer. You lost to a natural Blackjack!</p>');
+                    endGame('dealer-wins', 0, '<span class="blackjackIcon"></span><p>Bummer! Natural Blackjack.</p>');
                 } else {
                     const winAmount = currentBet + Math.floor(currentBet * 1.5);
                     stats.wins++;
                     stats.totalWon += Math.floor(currentBet * 1.5);
                     updateStatsDisplay();
-                    endGame('victory', winAmount, '<span class="blackjackIcon"></span><p>Natural Blackjack! You win 1.5x your bet!</p>');
+                    endGame('victory', winAmount, '<span class="blackjackIcon"></span><p>Natural Blackjack?! Big winner here!</p>');
                 }
             }, 500);
         }, 500);
@@ -361,7 +361,7 @@ function determineWinner() {
             const winAmount = currentBet + Math.floor(currentBet * 1.5);
             stats.wins++;
             stats.totalWon += Math.floor(currentBet * 1.5);
-            endGame('victory', winAmount, '<span class="blackjackIcon"></span><p>Natural Blackjack! Rad. You win 1.5x your bet!</p>');
+            endGame('victory', winAmount, '<span class="blackjackIcon"></span><p>Natural Blackjack?! Big winner here!</p>');
         } else {
             stats.wins++;
             stats.totalWon += currentBet;
@@ -396,20 +396,20 @@ function endGame(outcome, winAmount = 0, extraMessage = '') {
     if (outcome === 'victory') {
         balance += winAmount;
         toastClass = 'victory';
-        toastMessage = extraMessage || `<span class="moneySackIcon"></span><p>Nice job! You won ${winAmount} chips!</p>`;
+        toastMessage = extraMessage || `<span class="moneySackIcon"></span><p>Nicely done winning ${winAmount} chips!</p>`;
     } else if (outcome === 'bust') {
         toastClass = 'bust';
-        toastMessage = extraMessage || `<span class="bustIcon"></span><p>Bummer, you busted! Lose ${currentBet} chips.</p>`;
+        toastMessage = extraMessage || `<span class="bustIcon"></span><p>Oof, you busted & lost ${currentBet} chips.</p>`;
     } else if (outcome === 'dealer-wins') {
         if (winAmount > 0) {
             balance += winAmount;
         }
         toastClass = 'dealer-wins';
-        toastMessage = extraMessage || `<span class="heartBreakIcon"></span><p>Oh no! You lost ${currentBet - winAmount} chips.</p>`;
+        toastMessage = extraMessage || `<span class="heartBreakIcon"></span><p>Ouch! You lost ${currentBet - winAmount} chips.</p>`;
     } else if (outcome === 'push') {
         balance += winAmount;
         toastClass = 'push';
-        toastMessage = extraMessage || `<span class="flagIcon"></span> It's a push! ${currentBet} chips coming home!`;
+        toastMessage = extraMessage || `<span class="flagIcon"></span> It's a push! Take your ${currentBet} back!`;
     }
 
     updateDisplay();
@@ -608,6 +608,119 @@ function showRules() {
 
 function closeRules() {
     document.getElementById('rules-modal').classList.remove('active');
+}
+
+
+function showToast(toastClass, toastMessage, duration = 5000) {
+    const toast = document.getElementById('toast');
+    if (!toast) return;
+
+    // reset
+    toast.className = `toast ${toastClass}`;
+    toast.innerHTML = toastMessage;
+    toast.classList.add('show');
+
+    // allow manual dismissal on click
+    const handleClick = () => {
+        toast.classList.remove('show');
+        toast.removeEventListener('click', handleClick);
+    };
+    toast.addEventListener('click', handleClick);
+
+    // auto hide
+    setTimeout(() => {
+        toast.classList.remove('show');
+        toast.removeEventListener('click', handleClick);
+    }, duration);
+}
+
+// Add chips helper — increases player's balance by a fixed amount (default 10,000)
+// Restrictions:
+// - max 10 clicks per 30 minutes (tracked in localStorage)
+// - cannot add if balance is over 100,000
+function getAddChipsTimestamps() {
+    try {
+        const raw = localStorage.getItem('add_chips_timestamps');
+        if (!raw) return [];
+        const parsed = JSON.parse(raw);
+        if (!Array.isArray(parsed)) return [];
+        // ensure numeric timestamps
+        return parsed.map(Number).filter(n => !Number.isNaN(n)).sort((a,b)=>a-b);
+    } catch (e) {
+        return [];
+    }
+}
+
+function saveAddChipsTimestamps(arr) {
+    try {
+        localStorage.setItem('add_chips_timestamps', JSON.stringify(arr));
+    } catch (e) {
+        // ignore
+    }
+}
+
+// Toast coalescing for add-chips: accumulate fast clicks and show single aggregated toast
+let _addChipsToastPending = 0;
+let _addChipsToastTimer = null;
+const ADD_CHIPS_TOAST_DEBOUNCE = 800; // ms to wait for more clicks before showing toast
+
+function _scheduleAddChipsToast(amount) {
+    _addChipsToastPending += amount;
+    if (_addChipsToastTimer) {
+        clearTimeout(_addChipsToastTimer);
+    }
+    _addChipsToastTimer = setTimeout(() => {
+        showToast('victory', `<span class="moneySackIcon"></span><p>Added ${_addChipsToastPending.toLocaleString()} chips!</p>`);
+        _addChipsToastPending = 0;
+        _addChipsToastTimer = null;
+    }, ADD_CHIPS_TOAST_DEBOUNCE);
+}
+
+function addChips(amount = 10000) {
+    const MAX_BALANCE = 100000; // user-specified cap
+    const LIMIT_COUNT = 10;
+    const LIMIT_WINDOW_MS = 15 * 60 * 1000; // 30 minutes
+
+    // If balance is over cap, show toast and refuse
+    if (balance > MAX_BALANCE) {
+        showToast('dealer-wins', `<span class="skullIcon"></span><p>C'mon. Your balance is over ${MAX_BALANCE.toLocaleString()}.</p>`);
+        return;
+    }
+
+    const now = Date.now();
+    let stamps = getAddChipsTimestamps();
+    // only keep timestamps within the window
+    stamps = stamps.filter(ts => (now - ts) <= LIMIT_WINDOW_MS);
+
+    if (stamps.length >= LIMIT_COUNT) {
+        // compute time until next available slot
+        const oldestAllowed = stamps[0] + LIMIT_WINDOW_MS;
+        const msLeft = Math.max(0, oldestAllowed - now);
+        const minutesLeft = Math.ceil(msLeft / 60000);
+        showToast('dealer-wins', `<span class="clockIcon"></span><p>Take a break. Try again in ${minutesLeft} minute${minutesLeft !== 1 ? 's' : ''}.</p>`);
+        return;
+    }
+
+    // record this click
+    stamps.push(now);
+    // keep sorted and save
+    stamps.sort((a,b)=>a-b);
+    saveAddChipsTimestamps(stamps);
+
+    // perform add immediately
+    balance += amount;
+    saveGameData();
+    updateDisplay();
+    updateStatsDisplay();
+
+    // schedule a coalesced toast rather than showing immediately
+    _scheduleAddChipsToast(amount);
+}
+
+// Attach to a button with id "add-chips" if present in the DOM
+const addChipsBtn = document.getElementById('add-chips');
+if (addChipsBtn) {
+    addChipsBtn.addEventListener('click', () => addChips(10000));
 }
 
 loadGameData();

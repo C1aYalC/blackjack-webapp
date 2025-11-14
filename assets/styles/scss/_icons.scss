@@ -34,6 +34,12 @@ span {
     }
 }
 
+.clockIcon {
+    &::before {
+        content: '\e29e';
+    }
+}
+
 .closeIcon {
     &::before {
         content: '\f057';
@@ -43,6 +49,12 @@ span {
 .clubIcon {
     &::before {
         content: '\f327';
+    }
+}
+
+.crossMarkIcon {
+    &::before {
+        content: '\f057';
     }
 }
 
@@ -78,9 +90,21 @@ span {
     }
 }
 
+.plusIcon {
+    &::before {
+        content: '\f055';
+    }
+}
+
 .rulesIcon {
     &::before {
         content: '\f02e';
+    }
+}
+
+.skullIcon {
+    &::before {
+        content: '\f714';
     }
 }
 

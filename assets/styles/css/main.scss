@@ -172,8 +172,8 @@ header {
         gap: 1rem;
 
         .buttonContainer {
-            display: flex;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
             gap: 1rem;
 
             button {

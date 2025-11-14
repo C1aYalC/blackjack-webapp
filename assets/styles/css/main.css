@@ -204,12 +204,20 @@ span::before {
   content: "\f85c";
 }
 
+.clockIcon::before {
+  content: "\e29e";
+}
+
 .closeIcon::before {
   content: "\f057";
 }
 
 .clubIcon::before {
   content: "\f327";
+}
+
+.crossMarkIcon::before {
+  content: "\f057";
 }
 
 .diamondIcon::before {
@@ -234,8 +242,16 @@ span::before {
   content: "\f81d";
 }
 
+.plusIcon::before {
+  content: "\f055";
+}
+
 .rulesIcon::before {
   content: "\f02e";
+}
+
+.skullIcon::before {
+  content: "\f714";
 }
 
 .statsIcon::before {
@@ -296,6 +312,7 @@ span::before {
   gap: 0.5rem;
   justify-content: center;
   padding: 0.5rem;
+  position: relative;
   text-align: center;
   width: 100%;
 }
@@ -303,8 +320,15 @@ span::before {
   font-size: 1.25rem;
   font-weight: 700;
 }
-.modal#bet-modal .bet-modal-header .bet-modal-chip-balance .coinIcon::before {
+.modal#bet-modal .bet-modal-header .bet-modal-chip-balance .coinIcon::before,
+.modal#bet-modal .bet-modal-header .bet-modal-chip-balance .plusIcon::before {
   font-size: 1.25rem;
+}
+.modal#bet-modal .bet-modal-header .bet-modal-chip-balance .plusIcon {
+  align-self: center;
+  display: grid;
+  position: absolute;
+  right: 0.5rem;
 }
 .modal#bet-modal .bet-modal-header .bet-modal-stats-rules {
   display: grid;
@@ -582,8 +606,8 @@ header .currentChipTotal .chipIcon::before {
   gap: 1rem;
 }
 .container.playerActions .buttonContainer {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 1rem;
 }
 .container.playerActions .buttonContainer button {
