@@ -64,6 +64,7 @@ button {
 
     &:disabled {
         background-color: var(--neutralGray);
+        border-color: transparent;
         color: var(--neutralGrayDarken);
         cursor: not-allowed;
     }

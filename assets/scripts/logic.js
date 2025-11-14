@@ -16,6 +16,32 @@ let stats = {
     totalLost: 0
 };
 
+function loadGameData() {
+    try {
+        const savedBalance = localStorage.getItem('blackjack_balance');
+        const savedStats = localStorage.getItem('blackjack_stats');
+        
+        if (savedBalance !== null) {
+            balance = parseInt(savedBalance);
+        }
+        
+        if (savedStats !== null) {
+            stats = JSON.parse(savedStats);
+        }
+    } catch (e) {
+        console.log('Could not load saved game data');
+    }
+}
+
+function saveGameData() {
+    try {
+        localStorage.setItem('blackjack_balance', balance.toString());
+        localStorage.setItem('blackjack_stats', JSON.stringify(stats));
+    } catch (e) {
+        console.log('Could not save game data');
+    }
+}
+
 const suits = [
     { symbol: 'spadeIcon', name: 'spade' },
     { symbol: 'heartIcon', name: 'heart' },
@@ -76,6 +102,16 @@ function calculateHandValue(hand) {
 function displayCards(hand, elementId, hideSecond = false) {
     const container = document.getElementById(elementId);
     container.innerHTML = '';
+
+    if (hand.length === 0) {
+        for (let i = 0; i < 2; i++) {
+            const cardDiv = document.createElement('div');
+            cardDiv.className = 'card hidden';
+            cardDiv.innerHTML = '<div class="playingCard blankCard"></div>';
+            container.appendChild(cardDiv);
+        }
+        return;
+    }
 
     hand.forEach((card, index) => {
         const cardDiv = document.createElement('div');
@@ -191,13 +227,13 @@ function placeBet() {
                     stats.losses++;
                     stats.totalLost += currentBet;
                     updateStatsDisplay();
-                    endGame('dealer-wins', 0, 'Dealer has Blackjack!');
+                    endGame('dealer-wins', 0, '<span class="blackjackIcon"></span><p>Bummer. You lost to a natural Blackjack!</p>');
                 } else {
                     const winAmount = currentBet + Math.floor(currentBet * 1.5);
                     stats.wins++;
                     stats.totalWon += Math.floor(currentBet * 1.5);
                     updateStatsDisplay();
-                    endGame('victory', winAmount, 'Blackjack! You win 1.5x your bet!');
+                    endGame('victory', winAmount, '<span class="blackjackIcon"></span><p>Natural Blackjack! You win 1.5x your bet!</p>');
                 }
             }, 500);
         }, 500);
@@ -317,7 +353,7 @@ function determineWinner() {
             const winAmount = currentBet + Math.floor(currentBet * 1.5);
             stats.wins++;
             stats.totalWon += Math.floor(currentBet * 1.5);
-            endGame('victory', winAmount, 'Blackjack! You win 1.5x your bet!');
+            endGame('victory', winAmount, '<span class="blackjackIcon"></span><p>Natural Blackjack! Rad. You win 1.5x your bet!</p>');
         } else {
             stats.wins++;
             stats.totalWon += currentBet;
@@ -524,6 +560,7 @@ function resetGame() {
     if (balance < 500) {
         alert('You ran out of Chips! Resetting to 10,000.');
         balance = 10000;
+        saveGameData();
         updateDisplay();
     }
 
@@ -540,6 +577,8 @@ function updateStatsDisplay() {
     document.getElementById('stat-won').textContent = stats.totalWon;
     document.getElementById('stat-lost').textContent = stats.totalLost;
     document.getElementById('stat-balance').textContent = balance;
+
+    saveGameData();
 }
 
 function showStatsFromBet() {
@@ -563,5 +602,6 @@ function closeRules() {
     document.getElementById('rules-modal').classList.remove('active');
 }
 
+loadGameData();
 createDeck();
 updateDisplay();

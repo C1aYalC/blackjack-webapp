@@ -107,6 +107,7 @@ header {
                     font-weight: 700;
                     height: 100%;
                     justify-content: center;
+                    min-height: 10.5rem;
                     min-width: 7rem;
                     padding: .5rem;
                     text-align: center;
@@ -124,7 +125,7 @@ header {
                         border-radius: .25rem;
                         display: grid;
                         gap: .5rem;
-                        min-width: 6rem;
+                        min-width: 6.25rem;
                         padding: 2rem;
                     }
                 }
