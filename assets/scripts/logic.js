@@ -172,6 +172,14 @@ function placeBet() {
     const toast = document.getElementById('toast');
     toast.classList.remove('show');
 
+    const betModal = document.getElementById('bet-modal');
+    betModal.classList.add('closing');
+
+    setTimeout(() => {
+        betModal.classList.remove('active');
+        betModal.classList.remove('closing');
+    }, 500);
+
     document.getElementById('bet-modal').classList.remove('active');
 
     createDeck();
