@@ -85,6 +85,9 @@
 
         <!-- Bet Modal -->
         <div class="modal active" id="bet-modal">
+            <!-- Toast Notification -->
+            <div class="toast" id="toast"></div>
+
             <div class="modal-content">
                 <div class="bet-modal-header">
                     <div class="bet-modal-chip-balance">
@@ -110,7 +113,7 @@
                         <input type="number" id="bet-modal-input" class="bet-modal-input" placeholder="Minimum bet is 500 Chips" min="500" step="100" value="500">
                         <button class="primaryButton" onclick="placeBet()">
                             <span class="chipIcon"></span>
-                            <p>Bet</p>
+                            <p>Place Bet</p>
                         </button>
                     </div>
                 </div>
@@ -199,8 +202,5 @@
                 </div>
             </div>
         </div>
-
-        <!-- Toast Notification -->
-        <div class="toast" id="toast"></div>
     </body>
 </html>

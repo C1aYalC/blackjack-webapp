@@ -13,13 +13,13 @@
     opacity: 0;
     padding: 1rem;
     pointer-events: auto;
-    position: fixed;
+    min-height: 57px;
     text-align: center;
     top: 30%;
     transition: all 0.5s ease;
     user-select: none;
     visibility: hidden;
-    width: calc(100vw - 1rem);
+    width: 100%;
     z-index: 2000;
 
     &:active {

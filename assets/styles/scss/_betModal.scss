@@ -18,9 +18,10 @@
     }
 
     &#bet-modal {
-        align-items: center;
+        align-content: center;
         display: grid;
-        padding: 1rem;
+        gap: 1rem;
+        grid-template-rows: max-content max-content;
 
         &:not(&.active) {
             display: none;
@@ -108,7 +109,7 @@
             .bet-input-container {
                 display: grid;
                 gap: .5rem;
-                grid-template-columns: 2fr auto;
+                grid-template-columns: auto max-content;
 
                 input {
                     background-color: var(--white);
@@ -125,13 +126,12 @@
     }
 
     .modal-content {
-        animation: slideIn 0.5s ease forwards;
+        animation: fadeIn 0.5s ease forwards;
         background: var(--offWhite);
         border-radius: .5rem;
         position: relative;
         text-align: center;
-        transform: translateY(-20px);
-        width: calc(100dvw - 1rem);
+        width: calc(100vw - 1rem);
     }
 
     @keyframes fadeIn {

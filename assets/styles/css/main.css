@@ -290,9 +290,10 @@ span::before {
   animation: fadeIn 0.5s ease forwards;
 }
 .modal#bet-modal {
-  align-items: center;
+  align-content: center;
   display: grid;
-  padding: 1rem;
+  gap: 1rem;
+  grid-template-rows: max-content max-content;
 }
 .modal#bet-modal:not(.modal#bet-modal.active) {
   display: none;
@@ -366,7 +367,7 @@ span::before {
 .modal#bet-modal .bet-modal-content .bet-input-container {
   display: grid;
   gap: 0.5rem;
-  grid-template-columns: 2fr auto;
+  grid-template-columns: auto max-content;
 }
 .modal#bet-modal .bet-modal-content .bet-input-container input {
   background-color: var(--white);
@@ -381,13 +382,12 @@ span::before {
   color: var(--neutralGrayDarken);
 }
 .modal .modal-content {
-  animation: slideIn 0.5s ease forwards;
+  animation: fadeIn 0.5s ease forwards;
   background: var(--offWhite);
   border-radius: 0.5rem;
   position: relative;
   text-align: center;
-  transform: translateY(-20px);
-  width: calc(100dvw - 1rem);
+  width: calc(100vw - 1rem);
 }
 @keyframes fadeIn {
   from {
@@ -423,7 +423,7 @@ span::before {
   opacity: 0;
   padding: 1rem;
   pointer-events: auto;
-  position: fixed;
+  min-height: 57px;
   text-align: center;
   top: 30%;
   transition: all 0.5s ease;
@@ -431,7 +431,7 @@ span::before {
      -moz-user-select: none;
           user-select: none;
   visibility: hidden;
-  width: calc(100vw - 1rem);
+  width: 100%;
   z-index: 2000;
 }
 .toast:active {
