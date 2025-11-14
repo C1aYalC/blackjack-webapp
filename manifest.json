@@ -4,8 +4,8 @@
   "description": "A simple, bitesized blackjack card game",
   "start_url": ".",
   "display": "standalone",
-  "background_color": "#1e3c72",
-  "theme_color": "#1e3c72",
+  "background_color": "#F6F6F6",
+  "theme_color": "#F1AF1E",
   "orientation": "portrait",
   "icons": [
     {
