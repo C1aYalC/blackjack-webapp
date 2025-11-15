@@ -723,6 +723,138 @@ if (addChipsBtn) {
     addChipsBtn.addEventListener('click', () => addChips(10000));
 }
 
+/* ===== DELETE PLAYER DATA FUNCTIONS - START ===== */
+function showDeleteConfirm() {
+    document.getElementById('slide-confirm').classList.add('active');
+}
+
+function cancelDelete() {
+    document.getElementById('slide-confirm').classList.remove('active');
+    resetSlider();
+}
+
+function resetSlider() {
+    const button = document.getElementById('slide-button');
+    const fill = document.getElementById('slide-fill');
+    button.style.left = '4px';
+    fill.style.width = '0%';
+    document.getElementById('slide-text').style.opacity = '1';
+}
+
+function deleteAllData() {
+    // Show deleting modal
+    const deletingModal = document.getElementById('deleting-modal');
+    const deletingText = document.getElementById('deleting-text');
+    const deletingSpinner = document.getElementById('deleting-spinner');
+    
+    deletingModal.classList.add('active');
+    
+    // Simulate deletion process
+    setTimeout(() => {
+        // Clear localStorage
+        localStorage.removeItem('blackjack_balance');
+        localStorage.removeItem('blackjack_stats');
+        
+        // Reset all game data
+        balance = 10000;
+        stats = {
+            wins: 0,
+            losses: 0,
+            busts: 0,
+            blackjacks: 0,
+            pushes: 0,
+            totalWon: 0,
+            totalLost: 0
+        };
+        
+        // Update display
+        updateDisplay();
+        updateStatsDisplay();
+        
+        // Show success
+        deletingSpinner.style.display = 'none';
+        deletingText.innerHTML = '<div class="delete-success">✓</div><div style="color: white; margin-top: 10px;">Data Deleted Successfully</div>';
+        
+        // Hide modal and reset after delay
+        setTimeout(() => {
+            deletingModal.classList.remove('active');
+            deletingSpinner.style.display = 'block';
+            deletingText.innerHTML = 'Deleting player data...';
+            document.getElementById('slide-confirm').classList.remove('active');
+            resetSlider();
+        }, 1500);
+    }, 1500);
+}
+
+// Slide to delete functionality
+(function() {
+    let isDragging = false;
+    let startX = 0;
+    let currentX = 0;
+    let buttonStartLeft = 4;
+
+    const button = document.getElementById('slide-button');
+    const fill = document.getElementById('slide-fill');
+    const track = document.querySelector('.slide-track');
+    const slideText = document.getElementById('slide-text');
+
+    function handleStart(e) {
+        isDragging = true;
+        startX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+        const buttonRect = button.getBoundingClientRect();
+        buttonStartLeft = buttonRect.left - track.getBoundingClientRect().left;
+        button.style.transition = 'none';
+        fill.style.transition = 'none';
+    }
+
+    function handleMove(e) {
+        if (!isDragging) return;
+        
+        e.preventDefault();
+        currentX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+        const deltaX = currentX - startX;
+        const trackWidth = track.offsetWidth;
+        const buttonWidth = button.offsetWidth;
+        const maxLeft = trackWidth - buttonWidth - 4;
+        
+        let newLeft = buttonStartLeft + deltaX;
+        newLeft = Math.max(4, Math.min(newLeft, maxLeft));
+        
+        button.style.left = newLeft + 'px';
+        
+        const percentage = ((newLeft - 4) / (maxLeft - 4)) * 100;
+        fill.style.width = percentage + '%';
+        slideText.style.opacity = 1 - (percentage / 100);
+        
+        // If slid all the way
+        if (newLeft >= maxLeft - 5) {
+            isDragging = false;
+            deleteAllData();
+        }
+    }
+
+    function handleEnd() {
+        if (!isDragging) return;
+        isDragging = false;
+        
+        button.style.transition = 'left 0.3s ease';
+        fill.style.transition = 'width 0.3s ease';
+        
+        // Snap back if not completed
+        resetSlider();
+    }
+
+    button.addEventListener('mousedown', handleStart);
+    button.addEventListener('touchstart', handleStart, { passive: false });
+    
+    document.addEventListener('mousemove', handleMove);
+    document.addEventListener('touchmove', handleMove, { passive: false });
+    
+    document.addEventListener('mouseup', handleEnd);
+    document.addEventListener('touchend', handleEnd);
+})();
+/* ===== DELETE PLAYER DATA FUNCTIONS - END ===== */
+
 loadGameData();
 createDeck();
 updateDisplay();

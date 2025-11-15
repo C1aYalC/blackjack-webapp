@@ -1,0 +1,163 @@
+// TODO: Clean this up
+.delete-data-btn {
+    margin-top: 20px;
+    background: #f44336;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background 0.3s;
+}
+
+.delete-data-btn:hover {
+    background: #d32f2f;
+}
+
+.slide-confirm {
+    display: none;
+    margin-top: 20px;
+    padding: 20px;
+    background: #ffebee;
+    border-radius: 10px;
+    border: 2px solid #f44336;
+}
+
+.slide-confirm.active {
+    display: block;
+}
+
+.slide-confirm-text {
+    color: #f44336;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.slide-track {
+    position: relative;
+    width: 100%;
+    height: 60px;
+    background: #fff;
+    border-radius: 30px;
+    overflow: hidden;
+    border: 2px solid #f44336;
+}
+
+.slide-fill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background: linear-gradient(90deg, #f44336 0%, #d32f2f 100%);
+    width: 0%;
+    transition: width 0.1s ease;
+    border-radius: 30px;
+}
+
+.slide-button {
+    position: absolute;
+    left: 4px;
+    top: 4px;
+    width: 52px;
+    height: 52px;
+    background: white;
+    border-radius: 50%;
+    cursor: grab;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5em;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    user-select: none;
+    z-index: 10;
+}
+
+.slide-button:active {
+    cursor: grabbing;
+}
+
+.slide-text {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    line-height: 60px;
+    color: #999;
+    font-weight: bold;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.cancel-delete-btn {
+    margin-top: 10px;
+    background: #666;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9em;
+    width: 100%;
+}
+
+.cancel-delete-btn:hover {
+    background: #555;
+}
+
+.deleting-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    justify-content: center;
+    align-items: center;
+    z-index: 3000;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.deleting-modal.active {
+    display: flex;
+}
+
+.deleting-spinner {
+    width: 60px;
+    height: 60px;
+    border: 6px solid #333;
+    border-top: 6px solid #f44336;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.deleting-text {
+    color: white;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.delete-success {
+    color: #4CAF50;
+    font-size: 3em;
+    opacity: 0;
+    animation: fadeInScale 0.5s ease forwards;
+}
+
+@keyframes fadeInScale {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}

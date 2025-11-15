@@ -87,7 +87,6 @@
         <div class="modal active" id="bet-modal">
             <!-- Toast Notification -->
             <div class="toast" id="toast"></div>
-
             <div class="modal-content">
                 <div class="bet-modal-header">
                     <div class="bet-modal-chip-balance">
@@ -160,6 +159,20 @@
                 <div class="stats-footer">
                     <div class="stats-footer-label">Current Chips</div>
                     <div class="stats-footer-value" id="stat-balance">10000</div>
+
+                    <!-- TODO: Clean this up -->
+                    <button class="delete-data-btn" onclick="showDeleteConfirm()">Delete Player Data</button>
+                    <div class="slide-confirm" id="slide-confirm">
+                    <div class="slide-confirm-text">⚠️ Slide to permanently delete all data</div>
+                    <div class="slide-track">
+                        <div class="slide-fill" id="slide-fill"></div>
+                        <div class="slide-text" id="slide-text">Slide to Delete →</div>
+                        <div class="slide-button" id="slide-button">🗑️</div>
+                    </div>
+                    <button class="cancel-delete-btn" onclick="cancelDelete()">Cancel</button>
+                    </div>
+                    <!--------------------------->
+
                 </div>
             </div>
         </div>
@@ -202,5 +215,12 @@
                 </div>
             </div>
         </div>
+
+        <!-- TODO: Clean this up -->
+        <div class="deleting-modal" id="deleting-modal">
+            <div class="deleting-spinner" id="deleting-spinner"></div>
+            <div class="deleting-text" id="deleting-text">Deleting player data...</div>
+        </div>
+        <!------------------------->
     </body>
 </html>
