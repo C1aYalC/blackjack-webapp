@@ -1,0 +1,112 @@
+#stats-modal {
+
+    .modal-content {
+        border-radius: .5rem;
+    }
+
+    .stats-footer {
+        align-items: center;
+        background-color: var(--primaryGold);
+        border-radius: 0 0 .5rem .5rem;
+        display: grid;
+        gap: .5rem;
+        grid-template-columns: max-content auto;
+        padding: 1rem;
+
+        .chipBalance {
+            align-items: center;
+            background-color: var(--primaryGoldLighten);
+            border-radius: .25rem;
+            border: 2px solid var(--primaryGoldDarken);
+            color: var(--primaryGoldDarken);
+            display: flex;
+            gap: .5rem;
+            justify-content: center;
+            padding: .5rem;
+            position: relative;
+            text-align: center;
+            width: 100%;
+
+            p {
+                font-size: 1.25rem;
+                font-weight: 700;
+            }
+
+            .coinIcon,
+            .plusIcon {
+                &::before {
+                    font-size: 1.25rem;
+                }
+            }
+        }
+
+        .footerLabel {
+            color: var(--primaryGoldDarken);
+            font-family: var(--headingFontFamily);
+            font-weight: 700;
+        }
+    }
+
+    .stats-header {
+        background-color: var(--primaryGreen);
+        border-radius: .5rem .5rem 0 0;
+        color: var(--offWhite);
+        display: grid;
+        font-size: 1.5rem;
+        grid-template-columns: auto max-content;
+        padding: 1rem;
+
+        .headerTextContainer {
+            display: grid;
+            gap: .5rem;
+            grid-template-columns: max-content max-content;
+
+            p {
+                font-family: var(--headingFontFamily);
+            }
+        }
+    }
+
+    .stats-grid {
+        display: grid;
+        gap: 1rem;
+        padding: 1rem;
+
+        .statsDivider {
+            background-color: var(--primaryGreenDarken);
+            border-radius: .5rem;
+            height: 2px;
+        }
+
+        .stats-item {
+            align-items: center;
+            display: grid;
+            grid-template-columns: max-content auto max-content;
+            gap: 1rem;
+
+            hr {
+                border-top: 2px solid var(--neutralGray);
+                height: 2px;
+            }
+            
+            p {
+                font-weight: 700;
+
+                &.negative {
+                    color: var(--accentColor);
+                }
+
+                &.positive {
+                    color: var(--primaryGreen);
+                }
+            }
+
+            .statsLabel {
+                align-items: center;
+                display: grid;
+                gap: .5rem;
+                grid-template-columns: auto max-content;
+            }
+        }
+    }
+}

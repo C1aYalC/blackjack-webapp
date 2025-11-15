@@ -95,6 +95,7 @@ meter {
 
 :root {
   --accentColor: #AF5646;
+  --accentColorDarken: #542922;
   --neutralGray: #D3D3D3;
   --neutralGrayDarken: #707070;
   --offBlack: #222222;
@@ -146,6 +147,9 @@ button.primaryButton:hover {
 }
 button.primaryButton:active {
   background-color: var(--primaryGreenDarken50);
+}
+button.primaryButton.danger {
+  background-color: var(--accentColor);
 }
 button.secondaryButton {
   background-color: var(--offWhite);
@@ -238,6 +242,14 @@ span::before {
   content: "\f7a9";
 }
 
+.longRightArrowIcon::before {
+  content: "\f30b";
+}
+
+.medalIcon::before {
+  content: "\f5a2";
+}
+
 .moneyHandsIcon::before {
   content: "\f4c5";
 }
@@ -248,6 +260,10 @@ span::before {
 
 .plusIcon::before {
   content: "\f055";
+}
+
+.refreshIcon::before {
+  content: "\f01e";
 }
 
 .rulesIcon::before {
@@ -341,7 +357,7 @@ span::before {
   grid-template-columns: 1fr 1fr;
 }
 .modal#bet-modal .bet-modal-header .bet-modal-stats-rules button {
-  grid-template-columns: 1fr;
+  grid-template-columns: auto 1fr;
 }
 .modal#bet-modal .bet-modal-content {
   display: grid;
@@ -408,6 +424,98 @@ span::before {
   }
 }
 
+#stats-modal .modal-content {
+  border-radius: 0.5rem;
+}
+#stats-modal .stats-footer {
+  align-items: center;
+  background-color: var(--primaryGold);
+  border-radius: 0 0 0.5rem 0.5rem;
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: max-content auto;
+  padding: 1rem;
+}
+#stats-modal .stats-footer .chipBalance {
+  align-items: center;
+  background-color: var(--primaryGoldLighten);
+  border-radius: 0.25rem;
+  border: 2px solid var(--primaryGoldDarken);
+  color: var(--primaryGoldDarken);
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  padding: 0.5rem;
+  position: relative;
+  text-align: center;
+  width: 100%;
+}
+#stats-modal .stats-footer .chipBalance p {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+#stats-modal .stats-footer .chipBalance .coinIcon::before,
+#stats-modal .stats-footer .chipBalance .plusIcon::before {
+  font-size: 1.25rem;
+}
+#stats-modal .stats-footer .footerLabel {
+  color: var(--primaryGoldDarken);
+  font-family: var(--headingFontFamily);
+  font-weight: 700;
+}
+#stats-modal .stats-header {
+  background-color: var(--primaryGreen);
+  border-radius: 0.5rem 0.5rem 0 0;
+  color: var(--offWhite);
+  display: grid;
+  font-size: 1.5rem;
+  grid-template-columns: auto max-content;
+  padding: 1rem;
+}
+#stats-modal .stats-header .headerTextContainer {
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: max-content max-content;
+}
+#stats-modal .stats-header .headerTextContainer p {
+  font-family: var(--headingFontFamily);
+}
+#stats-modal .stats-grid {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+}
+#stats-modal .stats-grid .statsDivider {
+  background-color: var(--primaryGreenDarken);
+  border-radius: 0.5rem;
+  height: 2px;
+}
+#stats-modal .stats-grid .stats-item {
+  align-items: center;
+  display: grid;
+  grid-template-columns: max-content auto max-content;
+  gap: 1rem;
+}
+#stats-modal .stats-grid .stats-item hr {
+  border-top: 2px solid var(--neutralGray);
+  height: 2px;
+}
+#stats-modal .stats-grid .stats-item p {
+  font-weight: 700;
+}
+#stats-modal .stats-grid .stats-item p.negative {
+  color: var(--accentColor);
+}
+#stats-modal .stats-grid .stats-item p.positive {
+  color: var(--primaryGreen);
+}
+#stats-modal .stats-grid .stats-item .statsLabel {
+  align-items: center;
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: auto max-content;
+}
+
 .toast {
   align-items: center;
   border-radius: 0.5rem;
@@ -466,29 +574,15 @@ span::before {
   line-height: 1;
 }
 
-.delete-data-btn {
-  margin-top: 20px;
-  background: #f44336;
-  color: white;
-  border: none;
-  padding: 12px 24px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 1em;
-  transition: background 0.3s;
-}
-
-.delete-data-btn:hover {
-  background: #d32f2f;
-}
-
 .slide-confirm {
+  background: var(--accentColorDarken);
+  border-radius: 1rem 1rem 0 0;
+  bottom: 0;
   display: none;
-  margin-top: 20px;
-  padding: 20px;
-  background: #ffebee;
-  border-radius: 10px;
-  border: 2px solid #f44336;
+  padding: 1rem;
+  position: absolute;
+  width: 100%;
+  z-index: 3000;
 }
 
 .slide-confirm.active {
@@ -503,13 +597,13 @@ span::before {
 }
 
 .slide-track {
+  background: var(--offWhite);
+  border-radius: 0.5rem;
+  min-height: 4rem;
+  overflow: hidden;
+  padding: 0.25rem;
   position: relative;
   width: 100%;
-  height: 60px;
-  background: #fff;
-  border-radius: 30px;
-  overflow: hidden;
-  border: 2px solid #f44336;
 }
 
 .slide-fill {
@@ -517,30 +611,25 @@ span::before {
   left: 0;
   top: 0;
   height: 100%;
-  background: linear-gradient(90deg, #f44336 0%, #d32f2f 100%);
+  background-color: transparent;
   width: 0%;
-  transition: width 0.1s ease;
-  border-radius: 30px;
 }
 
 .slide-button {
-  position: absolute;
-  left: 4px;
-  top: 4px;
-  width: 52px;
-  height: 52px;
-  background: white;
-  border-radius: 50%;
-  cursor: grab;
-  display: flex;
   align-items: center;
-  justify-content: center;
+  background: var(--accentColor);
+  border-radius: 0.25rem;
+  color: var(--offWhite);
+  cursor: grab;
+  display: grid;
   font-size: 1.5em;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  height: 3.5rem;
+  padding: 0.5rem 2rem;
+  position: absolute;
   -webkit-user-select: none;
      -moz-user-select: none;
           user-select: none;
-  z-index: 10;
+  z-index: 1;
 }
 
 .slide-button:active {
@@ -551,11 +640,11 @@ span::before {
   position: absolute;
   width: 100%;
   text-align: center;
-  line-height: 60px;
+  line-height: 3.5rem;
   color: #999;
   font-weight: bold;
   pointer-events: none;
-  z-index: 5;
+  z-index: 1;
 }
 
 .cancel-delete-btn {

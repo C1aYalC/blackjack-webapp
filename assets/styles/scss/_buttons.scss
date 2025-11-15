@@ -28,6 +28,10 @@ button {
         &:active {
             background-color: var(--primaryGreenDarken50);
         }
+
+        &.danger {
+            background-color: var(--accentColor);
+        }
     }
 
     &.secondaryButton {

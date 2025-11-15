@@ -84,6 +84,18 @@ span {
     }
 }
 
+.longRightArrowIcon {
+    &::before {
+        content: '\f30b';
+    }
+}
+
+.medalIcon {
+    &::before {
+        content: '\f5a2';
+    }
+}
+
 .moneyHandsIcon {
     &::before {
         content: '\f4c5';
@@ -99,6 +111,12 @@ span {
 .plusIcon {
     &::before {
         content: '\f055';
+    }
+}
+
+.refreshIcon {
+    &::before {
+        content: '\f01e'
     }
 }
 

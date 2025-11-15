@@ -97,9 +97,11 @@
                     <div class="bet-modal-stats-rules">
                         <button class="primaryButton smallButton playerStats" onclick="showStatsFromBet()" title="Statistics">
                             <span class="statsIcon"></span>
+                            <p>Stats</p>
                         </button>
                         <button class="tertiaryButton smallButton gameRules" onclick="showRulesFromBet()" title="Rules">
                             <span class="rulesIcon"></span>
+                            <p>Rules</p>
                         </button>
                     </div>
                 </div>
@@ -123,58 +125,95 @@
         <div class="modal" id="stats-modal">
             <div class="modal-content">
                 <div class="stats-header">
-                    <h2>📊 Player Stats</h2>
+                    <div class="headerTextContainer">
+                        <span class="statsIcon"></span>
+                        <p>Player Stats</p>
+                    </div>
                     <span class="closeIcon" onclick="closeStats()"></span>
                 </div>
                 <div class="stats-grid">
                     <div class="stats-item">
-                        <div class="stats-item-label">Wins</div>
-                        <div class="stats-item-value" id="stat-wins">0</div>
+                        <div class="statsLabel">
+                            <span class="medalIcon"></span>
+                            <p>Wins</p>
+                        </div>
+                        <hr>
+                        <p id="stat-wins">0</p>
                     </div>
                     <div class="stats-item">
-                        <div class="stats-item-label">Losses</div>
-                        <div class="stats-item-value" id="stat-losses">0</div>
+                        <div class="statsLabel">
+                            <span class="heartBreakIcon"></span>
+                            <p>Losses</p>
+                        </div>
+                        <hr>
+                        <p id="stat-losses">0</p>
                     </div>
                     <div class="stats-item">
-                        <div class="stats-item-label">Busts</div>
-                        <div class="stats-item-value" id="stat-busts">0</div>
+                        <div class="statsLabel">
+                            <span class="bustIcon"></span>
+                            <p>Busts</p>
+                        </div>
+                        <hr>
+                        <p id="stat-busts">0</p>
                     </div>
                     <div class="stats-item">
-                        <div class="stats-item-label">Natural Blackjacks</div>
-                        <div class="stats-item-value" id="stat-blackjacks">0</div>
+                        <div class="statsLabel">
+                            <span class="flagIcon"></span>
+                            <p>Pushes</p>
+                        </div>
+                        <hr>
+                        <p id="stat-pushes">0</p>
                     </div>
                     <div class="stats-item">
-                        <div class="stats-item-label">Pushes</div>
-                        <div class="stats-item-value" id="stat-pushes">0</div>
+                        <div class="statsLabel">
+                            <span class="blackjackIcon"></span>
+                            <p>Naturals</p>
+                        </div>
+                        <hr>
+                        <p id="stat-blackjacks">0</p>
+                    </div>
+                    <hr class="statsDivider">
+                    <div class="stats-item">
+                        <div class="statsLabel">
+                            <span class="coinIcon"></span>
+                            <p>Won</p>
+                        </div>
+                        <hr>
+                        <p class="positive" id="stat-won">0</p>
                     </div>
                     <div class="stats-item">
-                        <div class="stats-item-label">Total Chips Won</div>
-                        <div class="stats-item-value positive" id="stat-won">0</div>
+                        <div class="statsLabel">
+                            <span class="coinIcon"></span>
+                            <p>Lost</p>
+                        </div>
+                        <hr>
+                        <p class="negative" id="stat-lost">0</p>
                     </div>
-                    <div class="stats-item">
-                        <div class="stats-item-label">Total Chips Lost</div>
-                        <div class="stats-item-value negative" id="stat-lost">0</div>
-                    </div>
+                    <button class="primaryButton danger" onclick="showDeleteConfirm()">
+                        <span class="refreshIcon"></span>
+                        <p>Reset Player Stats</p>
+                    </button>
                 </div>
                 <div class="stats-footer">
-                    <div class="stats-footer-label">Current Chips</div>
-                    <div class="stats-footer-value" id="stat-balance">10000</div>
-
-                    <!-- TODO: Clean this up -->
-                    <button class="delete-data-btn" onclick="showDeleteConfirm()">Delete Player Data</button>
-                    <div class="slide-confirm" id="slide-confirm">
-                    <div class="slide-confirm-text">⚠️ Slide to permanently delete all data</div>
-                    <div class="slide-track">
-                        <div class="slide-fill" id="slide-fill"></div>
-                        <div class="slide-text" id="slide-text">Slide to Delete →</div>
-                        <div class="slide-button" id="slide-button">🗑️</div>
+                    <p class="footerLabel">Current Chip Total</p>
+                    <div class="chipBalance">
+                        <span class="coinIcon"></span>
+                        <p id="stat-balance">10000</p>
                     </div>
-                    <button class="cancel-delete-btn" onclick="cancelDelete()">Cancel</button>
-                    </div>
-                    <!--------------------------->
-
                 </div>
             </div>
+        </div>
+
+        <!-- Slide to Confirm Delete -->
+         <div class="slide-confirm" id="slide-confirm">
+            <div class="slide-track">
+                <div class="slide-fill" id="slide-fill"></div>
+                <div class="slide-text" id="slide-text">Slide to Delete →</div>
+                <div class="slide-button" id="slide-button">
+                    <span class="longRightArrowIcon"></span>
+                </div>
+            </div>
+            <button class="cancel-delete-btn" onclick="cancelDelete()">Cancel</button>
         </div>
 
         <!-- Rules Modal -->

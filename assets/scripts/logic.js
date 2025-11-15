@@ -396,7 +396,7 @@ function endGame(outcome, winAmount = 0, extraMessage = '') {
     if (outcome === 'victory') {
         balance += winAmount;
         toastClass = 'victory';
-        toastMessage = extraMessage || `<span class="moneySackIcon"></span><p>Nicely done winning ${winAmount} chips!</p>`;
+        toastMessage = extraMessage || `<span class="medalIcon"></span><p>Nicely done winning ${winAmount} chips!</p>`;
     } else if (outcome === 'bust') {
         toastClass = 'bust';
         toastMessage = extraMessage || `<span class="bustIcon"></span><p>Oof, you busted & lost ${currentBet} chips.</p>`;
