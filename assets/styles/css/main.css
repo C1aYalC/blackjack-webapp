@@ -601,7 +601,6 @@ span::before {
   border-radius: 0.5rem;
   min-height: 4rem;
   overflow: hidden;
-  padding: 0.25rem;
   position: relative;
   width: 100%;
 }
@@ -623,8 +622,8 @@ span::before {
   cursor: grab;
   display: grid;
   font-size: 1.5em;
-  height: 3.5rem;
-  padding: 0.5rem 2rem;
+  height: 100%;
+  padding: 0 2.5rem;
   position: absolute;
   -webkit-user-select: none;
      -moz-user-select: none;
@@ -640,8 +639,8 @@ span::before {
   position: absolute;
   width: 100%;
   text-align: center;
-  line-height: 3.5rem;
-  color: #999;
+  line-height: 3.75rem;
+  color: var(--neutralGrayDarken);
   font-weight: bold;
   pointer-events: none;
   z-index: 1;

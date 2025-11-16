@@ -736,7 +736,7 @@ function cancelDelete() {
 function resetSlider() {
     const button = document.getElementById('slide-button');
     const fill = document.getElementById('slide-fill');
-    button.style.left = '4px';
+    button.style.left = '0';
     fill.style.width = '0%';
     document.getElementById('slide-text').style.opacity = '1';
 }

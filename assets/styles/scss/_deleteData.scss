@@ -26,7 +26,6 @@
     border-radius: .5rem;
     min-height: 4rem;
     overflow: hidden;
-    padding: .25rem;
     position: relative;
     width: 100%;
 }
@@ -48,8 +47,8 @@
     cursor: grab;
     display: grid;
     font-size: 1.5em;
-    height: 3.5rem;
-    padding: .5rem 2rem;
+    height: 100%;
+    padding: 0 2.5rem;
     position: absolute;
     user-select: none;
     z-index: 1;
@@ -63,8 +62,8 @@
     position: absolute;
     width: 100%;
     text-align: center;
-    line-height: 3.5rem;
-    color: #999;
+    line-height: 3.75rem;
+    color: var(--neutralGrayDarken);
     font-weight: bold;
     pointer-events: none;
     z-index: 1;
