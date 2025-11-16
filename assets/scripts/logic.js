@@ -596,6 +596,13 @@ function showStatsFromBet() {
 
 function closeStats() {
     document.getElementById('stats-modal').classList.remove('active');
+    // Also ensure the delete confirmation slide is closed and reset
+    const slideConfirm = document.getElementById('slide-confirm');
+    if (slideConfirm) {
+        slideConfirm.classList.remove('active');
+    }
+    // Reset slider UI so it's not left half-dragged
+    if (typeof resetSlider === 'function') resetSlider();
 }
 
 function showRulesFromBet() {
@@ -791,7 +798,7 @@ function deleteAllData() {
     let isDragging = false;
     let startX = 0;
     let currentX = 0;
-    let buttonStartLeft = 4;
+    let buttonStartLeft = 0;
 
     const button = document.getElementById('slide-button');
     const fill = document.getElementById('slide-fill');
@@ -815,16 +822,16 @@ function deleteAllData() {
         const deltaX = currentX - startX;
         const trackWidth = track.offsetWidth;
         const buttonWidth = button.offsetWidth;
-        const maxLeft = trackWidth - buttonWidth - 4;
+        const maxLeft = trackWidth - buttonWidth - 0;
         
         let newLeft = buttonStartLeft + deltaX;
         newLeft = Math.max(4, Math.min(newLeft, maxLeft));
         
         button.style.left = newLeft + 'px';
         
-        const percentage = ((newLeft - 4) / (maxLeft - 4)) * 100;
+        const percentage = ((newLeft - 0) / (maxLeft - 0)) * 100;
         fill.style.width = percentage + '%';
-        slideText.style.opacity = 1 - (percentage / 100);
+        slideText.style.opacity = 1 - (percentage / 65);
         
         // If slid all the way
         if (newLeft >= maxLeft - 5) {

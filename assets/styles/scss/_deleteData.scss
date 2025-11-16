@@ -1,28 +1,45 @@
 // TODO: Clean this up
-.slide-confirm {
-    background: var(--accentColorDarken);
+.confirmDelete {
+    animation: slideUp 0.5s ease forwards;
+    background: var(--offWhite);
     border-radius: 1rem 1rem 0 0;
-    bottom: 0;
+    bottom: -6rem;
     display: none;
     padding: 1rem;
     position: absolute;
     width: 100%;
     z-index: 3000;
-}
 
-.slide-confirm.active {
-    display: block;
-}
+    &.active {
+        display: grid;
+        grid-template-columns: auto max-content;
+        gap: .5rem;
+    }
 
-.slide-confirm-text {
-    color: #f44336;
-    font-weight: bold;
-    margin-bottom: 15px;
-    text-align: center;
-}
+    @keyframes slideUp {
+        from {
+            bottom: -6rem;
+        }
+        to {
+            bottom: 0;
+        }
+    }
+
+    button {
+        border-radius: .5rem;
+        color: var(--offWhite);
+        grid-template-columns: auto max-content;
+        padding: 1rem;
+
+        span {
+            font-size: 1.25rem;
+        }
+    }
+} 
 
 .slide-track {
-    background: var(--offWhite);
+    background: var(--white);
+    border: 2px solid var(--accentColor);
     border-radius: .5rem;
     min-height: 4rem;
     overflow: hidden;
@@ -48,7 +65,7 @@
     display: grid;
     font-size: 1.5em;
     height: 100%;
-    padding: 0 2.5rem;
+    padding: 0 1.75rem;
     position: absolute;
     user-select: none;
     z-index: 1;
@@ -59,30 +76,15 @@
 }
 
 .slide-text {
-    position: absolute;
-    width: 100%;
-    text-align: center;
-    line-height: 3.75rem;
-    color: var(--neutralGrayDarken);
+    color: var(--accentColor);
     font-weight: bold;
+    left: 40%;
+    line-height: 3.75rem;
     pointer-events: none;
+    position: absolute;
+    text-align: center;
+    width: 50%;
     z-index: 1;
-}
-
-.cancel-delete-btn {
-    margin-top: 10px;
-    background: #666;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 0.9em;
-    width: 100%;
-}
-
-.cancel-delete-btn:hover {
-    background: #555;
 }
 
 .deleting-modal {

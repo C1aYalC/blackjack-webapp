@@ -21,16 +21,21 @@ button {
         background-color: var(--primaryGreen);
         color: var(--offWhite);
 
-        &:hover {
-            background-color: var(--primaryGreenDarken);
-        }
-
         &:active {
             background-color: var(--primaryGreenDarken50);
         }
 
         &.danger {
             background-color: var(--accentColor);
+
+            &:active,
+            &:hover {
+                background-color: var(--accentColorDarken);
+            }
+        }
+
+        &:hover {
+            background-color: var(--primaryGreenDarken);
         }
     }
 
@@ -64,6 +69,10 @@ button {
             background-color: var(--primaryGreen);
             color: var(--offWhite);
         }
+    }
+
+    &.quaternaryButton {
+        background-color: var(--offBlack);
     }
 
     &:disabled {
