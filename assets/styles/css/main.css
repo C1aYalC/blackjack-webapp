@@ -657,12 +657,13 @@ span::before {
 .slide-text {
   color: var(--accentColor);
   font-weight: bold;
-  left: 40%;
+  left: 41%;
   line-height: 3.75rem;
   pointer-events: none;
   position: absolute;
   text-align: center;
-  width: 50%;
+  width: -moz-fit-content;
+  width: fit-content;
   z-index: 1;
 }
 
