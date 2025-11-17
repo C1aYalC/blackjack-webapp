@@ -434,6 +434,11 @@ span::before {
 
 @media (min-width: 768px) {
   .modal-content {
+    max-width: calc(75vw - 2rem);
+  }
+}
+@media (min-width: 1024px) {
+  .modal-content {
     max-width: 40vw;
   }
 }
