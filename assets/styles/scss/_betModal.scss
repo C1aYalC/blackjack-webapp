@@ -20,8 +20,6 @@
     &#bet-modal {
         align-content: center;
         display: grid;
-        gap: 1rem;
-        grid-template-rows: max-content max-content;
 
         &:not(&.active) {
             display: none;

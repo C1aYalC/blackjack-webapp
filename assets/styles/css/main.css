@@ -292,6 +292,10 @@ span::before {
   content: "\f890";
 }
 
+.trophyIcon::before {
+  content: "\f091";
+}
+
 .modal {
   align-items: center;
   -webkit-backdrop-filter: blur(0.5rem);
@@ -314,8 +318,6 @@ span::before {
 .modal#bet-modal {
   align-content: center;
   display: grid;
-  gap: 1rem;
-  grid-template-rows: max-content max-content;
 }
 .modal#bet-modal:not(.modal#bet-modal.active) {
   display: none;
@@ -523,28 +525,25 @@ span::before {
 }
 
 .toast {
-  align-items: center;
-  border-radius: 0.5rem;
+  border-radius: 0 0 1rem 1rem;
   border: none;
   cursor: pointer;
   display: grid;
   font-size: 1.125rem;
   font-weight: bold;
   gap: 0.5rem;
-  grid-template-columns: auto 1fr;
   justify-items: center;
   justify-self: center;
-  opacity: 0;
   padding: 1rem;
   pointer-events: auto;
-  min-height: 57px;
+  position: absolute;
   text-align: center;
-  top: 30%;
-  transition: all 0.5s ease;
+  top: -6rem;
+  transition: top 0.5s ease;
   -webkit-user-select: none;
      -moz-user-select: none;
           user-select: none;
-  visibility: hidden;
+  visibility: visible;
   width: 100%;
   z-index: 2000;
 }
@@ -564,7 +563,7 @@ span::before {
   color: var(--primaryGoldDarken);
 }
 .toast.show {
-  opacity: 1;
+  top: 0;
   pointer-events: auto;
   visibility: visible;
 }
@@ -576,29 +575,40 @@ span::before {
   color: var(--offWhite);
 }
 .toast span {
-  font-size: 1.5rem;
+  font-size: 2rem;
   line-height: 1;
 }
 
 .confirmDelete {
-  animation: slideUp 0.5s ease forwards;
   background: var(--offWhite);
   border-radius: 1rem 1rem 0 0;
   bottom: -6rem;
-  display: none;
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: auto max-content;
   padding: 1rem;
   position: absolute;
   width: 100%;
   z-index: 3000;
 }
 .confirmDelete.active {
-  display: grid;
-  grid-template-columns: auto max-content;
-  gap: 0.5rem;
+  animation: slideUp 0.5s ease forwards;
+  visibility: visible;
+}
+.confirmDelete.hidden {
+  animation: slideDown 0.5s ease forwards;
+}
+@keyframes slideDown {
+  from {
+    bottom: 0;
+  }
+  to {
+    bottom: -7rem;
+  }
 }
 @keyframes slideUp {
   from {
-    bottom: -6rem;
+    bottom: -7rem;
   }
   to {
     bottom: 0;
@@ -726,6 +736,38 @@ span::before {
     transform: scale(1);
   }
 }
+#splash {
+  align-items: center;
+  background: linear-gradient(-45deg, var(--primaryGreenDarken) 50%, var(--primaryGreenDarken50) 50%);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  inset: 0;
+  justify-content: center;
+  position: fixed;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+  z-index: 3000;
+}
+
+#splash img {
+  width: 256px;
+  height: auto;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+
+#splash .splash-title {
+  font-family: var(--headingFontFamily);
+  font-size: 1.25rem;
+  margin-top: 0.75rem;
+  font-weight: 700;
+}
+
+#splash.splash--hide {
+  opacity: 0;
+  visibility: hidden;
+}
+
 html {
   background-color: var(--offWhite);
   color: var(--offBlack);

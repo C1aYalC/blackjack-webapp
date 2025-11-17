@@ -1,0 +1,15 @@
+#splash {
+    align-items: center;
+    background: linear-gradient(-45deg, var(--primaryGreenDarken) 50%, var(--primaryGreenDarken50) 50%);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    inset: 0;
+    justify-content: center;
+    position: fixed;
+    transition: opacity .5s ease, visibility .5s ease;
+    z-index: 3000;
+}
+#splash img { width: 256px; height: auto; object-fit: contain; }
+#splash .splash-title { font-family: var(--headingFontFamily); font-size: 1.25rem; margin-top: 0.75rem; font-weight:700; }
+#splash.splash--hide { opacity: 0; visibility: hidden; }

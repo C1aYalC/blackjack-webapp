@@ -22,6 +22,9 @@
         <script src="assets/scripts/logic.js" defer></script>
     </head>
     <body>
+        <div id="splash">
+            <img src="assets/images/bitsizedBlackjackIcon-512.png" alt="Bitsized Blackjack Splash screen">
+        </div>
         <main>
             <header>
                 <div class="currentChipTotal">
@@ -83,10 +86,11 @@
             </div>
         </div>
 
+        <!-- Toast Notification -->
+        <div class="toast" id="toast"></div>
+        
         <!-- Bet Modal -->
         <div class="modal active" id="bet-modal">
-            <!-- Toast Notification -->
-            <div class="toast" id="toast"></div>
             <div class="modal-content">
                 <div class="bet-modal-header">
                     <div class="bet-modal-chip-balance">
@@ -134,7 +138,7 @@
                 <div class="stats-grid">
                     <div class="stats-item">
                         <div class="statsLabel">
-                            <span class="medalIcon"></span>
+                            <span class="trophyIcon"></span>
                             <p>Wins</p>
                         </div>
                         <hr>

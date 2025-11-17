@@ -42,6 +42,14 @@ function saveGameData() {
     }
 }
 
+// Format numbers consistently for display (thousands separators)
+function formatNumber(n) {
+    if (n === null || n === undefined) return '';
+    const num = Number(n);
+    if (Number.isNaN(num)) return String(n);
+    return num.toLocaleString();
+}
+
 const suits = [
     { symbol: 'spadeIcon', name: 'spade' },
     { symbol: 'heartIcon', name: 'heart' },
@@ -134,8 +142,8 @@ function displayCards(hand, elementId, hideSecond = false) {
 }
 
 function updateDisplay() {
-    document.getElementById('balance').textContent = balance;
-    document.getElementById('bet-modal-balance').textContent = balance;
+    document.getElementById('balance').textContent = formatNumber(balance);
+    document.getElementById('bet-modal-balance').textContent = formatNumber(balance);
 
     displayCards(dealerHand, 'dealer-cards', dealerHidden);
     displayCards(playerHand, 'player-cards');
@@ -146,10 +154,10 @@ function updateDisplay() {
     if (dealerHidden && dealerHand.length > 0) {
         const visibleCard = dealerHand[0];
         const visibleValue = getCardValue(visibleCard);
-        document.getElementById('dealer-value').textContent = `${visibleValue}`;
+    document.getElementById('dealer-value').textContent = `${visibleValue}`;
     } else if (dealerHand.length > 0) {
         const dealerValue = calculateHandValue(dealerHand);
-        document.getElementById('dealer-value').textContent = `${dealerValue}`;
+    document.getElementById('dealer-value').textContent = `${dealerValue}`;
     } else {
         document.getElementById('dealer-value').textContent = '';
     }
@@ -230,18 +238,18 @@ function placeBet() {
                 if (dealerBlackjack && playerBlackjack) {
                     stats.pushes++;
                     updateStatsDisplay();
-                    endGame('push', currentBet, '<span class="pushIcon"></span><p>Two natural Blackjacks!? Crazy.</p>');
+                    endGame('push', currentBet, '<span class="pushIcon"></span><p>Two natural blackjacks!? That is crazy.</p>');
                 } else if (dealerBlackjack) {
                     stats.losses++;
                     stats.totalLost += currentBet;
                     updateStatsDisplay();
-                    endGame('dealer-wins', 0, '<span class="blackjackIcon"></span><p>Bummer! Natural Blackjack.</p>');
+                    endGame('dealer-wins', 0, '<span class="heartBreakIcon"></span><p>Bummer! Dealer has a natural blackjack.</p>');
                 } else {
                     const winAmount = currentBet + Math.floor(currentBet * 1.5);
                     stats.wins++;
                     stats.totalWon += Math.floor(currentBet * 1.5);
                     updateStatsDisplay();
-                    endGame('victory', winAmount, '<span class="blackjackIcon"></span><p>Natural Blackjack?! Big winner here!</p>');
+                    endGame('victory', winAmount, '<span class="blackjackIcon"></span><p>A natural blackjack?! Big winner over here!</p>');
                 }
             }, 500);
         }, 500);
@@ -382,168 +390,28 @@ function determineWinner() {
 function endGame(outcome, winAmount = 0, extraMessage = '') {
     gameActive = false;
 
-    if (outcome === 'bust') {
-        stats.busts++;
-        stats.losses++;
-        stats.totalLost += currentBet;
-        updateStatsDisplay();
-    }
-
-    const toast = document.getElementById('toast');
-    let toastMessage = '';
-    let toastClass = '';
-
     if (outcome === 'victory') {
         balance += winAmount;
         toastClass = 'victory';
-        toastMessage = extraMessage || `<span class="medalIcon"></span><p>Nicely done winning ${winAmount} chips!</p>`;
+        toastMessage = extraMessage || `<span class="trophyIcon"></span><p>Nice job! You won ${formatNumber(winAmount)} chips!</p>`;
     } else if (outcome === 'bust') {
         toastClass = 'bust';
-        toastMessage = extraMessage || `<span class="bustIcon"></span><p>Oof, you busted & lost ${currentBet} chips.</p>`;
+        toastMessage = extraMessage || `<span class="bustIcon"></span><p>Oh no! You busted & lost ${formatNumber(currentBet)} chips.</p>`;
     } else if (outcome === 'dealer-wins') {
         if (winAmount > 0) {
             balance += winAmount;
         }
         toastClass = 'dealer-wins';
-        toastMessage = extraMessage || `<span class="heartBreakIcon"></span><p>Ouch! You lost ${currentBet - winAmount} chips.</p>`;
+        toastMessage = extraMessage || `<span class="heartBreakIcon"></span><p>Tough luck! You lost ${formatNumber(currentBet - winAmount)} chips.</p>`;
     } else if (outcome === 'push') {
         balance += winAmount;
         toastClass = 'push';
-        toastMessage = extraMessage || `<span class="flagIcon"></span> It's a push! Take your ${currentBet} back!`;
+        toastMessage = extraMessage || `<span class="flagIcon"></span>Push! You get to keep your ${formatNumber(currentBet)} chips!`;
     }
 
     updateDisplay();
-
     setTimeout(() => {
-        toast.className = `toast ${toastClass}`;
-        toast.innerHTML = toastMessage;
-        
-        // Add swipe and click functionality
-        let startY = 0;
-        let startX = 0;
-        let currentY = 0;
-        let isDragging = false;
-        let autoHideTimeout;
-
-        const dismissToast = () => {
-            toast.classList.remove('show');
-            toast.style.transform = '';
-            toast.style.opacity = '';
-            clearTimeout(autoHideTimeout);
-            toast.removeEventListener('touchstart', handleTouchStart);
-            toast.removeEventListener('touchmove', handleTouchMove);
-            toast.removeEventListener('touchend', handleTouchEnd);
-            toast.removeEventListener('mousedown', handleMouseDown);
-            toast.removeEventListener('mousemove', handleMouseMove);
-            toast.removeEventListener('mouseup', handleMouseUp);
-            toast.removeEventListener('click', handleClick);
-        };
-
-        const handleClick = (e) => {
-            if (!isDragging) {
-                // Smooth fade for desktop click
-                toast.classList.remove('swiping');
-                toast.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-                toast.style.opacity = '0';
-                toast.style.transform = 'translateX(0) translateY(-20px)';
-                setTimeout(dismissToast, 500);
-            }
-        };
-
-        const handleTouchStart = (e) => {
-            startY = e.touches[0].clientY;
-            startX = e.touches[0].clientX;
-            currentY = startY;
-            isDragging = false;
-        };
-
-        const handleTouchMove = (e) => {
-            currentY = e.touches[0].clientY;
-            const deltaY = currentY - startY;
-            const deltaX = Math.abs(e.touches[0].clientX - startX);
-            
-            if (Math.abs(deltaY) > 5 || deltaX > 5) {
-                isDragging = true;
-                toast.classList.add('swiping');
-            }
-            
-            if (deltaY < 0 && isDragging) {
-                e.preventDefault();
-                toast.style.transform = `translateX(0) translateY(${deltaY}px)`;
-                toast.style.opacity = Math.max(0, 1 + (deltaY / 100));
-            }
-        };
-
-        const handleTouchEnd = () => {
-            toast.classList.remove('swiping');
-            
-            const deltaY = currentY - startY;
-            
-            if (deltaY < -50) {
-                toast.style.transform = 'translateX(0) translateY(-100px)';
-                toast.style.opacity = '0';
-                setTimeout(dismissToast, 300);
-            } else {
-                toast.style.transform = 'translateX(0) translateY(0)';
-                toast.style.opacity = '1';
-            }
-        };
-
-        // Mouse events for desktop
-        const handleMouseDown = (e) => {
-            startY = e.clientY;
-            currentY = startY;
-            isDragging = false;
-            
-            document.addEventListener('mousemove', handleMouseMove);
-            document.addEventListener('mouseup', handleMouseUp);
-        };
-
-        const handleMouseMove = (e) => {
-            currentY = e.clientY;
-            const deltaY = currentY - startY;
-            
-            if (Math.abs(deltaY) > 5) {
-                isDragging = true;
-                toast.classList.add('swiping');
-            }
-            
-            if (deltaY < 0 && isDragging) {
-                toast.style.transform = `translateX(0) translateY(${deltaY}px)`;
-                toast.style.opacity = Math.max(0, 1 + (deltaY / 100));
-            }
-        };
-
-        const handleMouseUp = () => {
-            toast.classList.remove('swiping');
-            document.removeEventListener('mousemove', handleMouseMove);
-            document.removeEventListener('mouseup', handleMouseUp);
-            
-            const deltaY = currentY - startY;
-            
-            if (deltaY < -50) {
-                toast.style.transform = 'translateX(0) translateY(-100px)';
-                toast.style.opacity = '0';
-                setTimeout(dismissToast, 300);
-            } else {
-                toast.style.transform = 'translateX(0) translateY(0)';
-                toast.style.opacity = '1';
-            }
-        };
-
-        toast.addEventListener('touchstart', handleTouchStart, { passive: false });
-        toast.addEventListener('touchmove', handleTouchMove, { passive: false });
-        toast.addEventListener('touchend', handleTouchEnd);
-        toast.addEventListener('mousedown', handleMouseDown);
-        toast.addEventListener('click', handleClick);
-
-        setTimeout(() => toast.classList.add('show'), 100);
-
-        // Fade out toast after 5 seconds
-        autoHideTimeout = setTimeout(() => {
-            dismissToast();
-        }, 5000);
-
+        _complexToast(toastClass, toastMessage, 5000);
         resetGame();
     }, 1000);
 }
@@ -577,14 +445,14 @@ function resetGame() {
 }
 
 function updateStatsDisplay() {
-    document.getElementById('stat-wins').textContent = stats.wins;
-    document.getElementById('stat-losses').textContent = stats.losses;
-    document.getElementById('stat-busts').textContent = stats.busts;
-    document.getElementById('stat-blackjacks').textContent = stats.blackjacks;
-    document.getElementById('stat-pushes').textContent = stats.pushes;
-    document.getElementById('stat-won').textContent = stats.totalWon;
-    document.getElementById('stat-lost').textContent = stats.totalLost;
-    document.getElementById('stat-balance').textContent = balance;
+    document.getElementById('stat-wins').textContent = formatNumber(stats.wins);
+    document.getElementById('stat-losses').textContent = formatNumber(stats.losses);
+    document.getElementById('stat-busts').textContent = formatNumber(stats.busts);
+    document.getElementById('stat-blackjacks').textContent = formatNumber(stats.blackjacks);
+    document.getElementById('stat-pushes').textContent = formatNumber(stats.pushes);
+    document.getElementById('stat-won').textContent = formatNumber(stats.totalWon);
+    document.getElementById('stat-lost').textContent = formatNumber(stats.totalLost);
+    document.getElementById('stat-balance').textContent = formatNumber(balance);
 
     saveGameData();
 }
@@ -634,10 +502,136 @@ function showToast(toastClass, toastMessage, duration = 5000) {
     };
     toast.addEventListener('click', handleClick);
 
-    // auto hide
+    // auto hide — remove `show` to trigger CSS fade, then remove listener after transition
     setTimeout(() => {
         toast.classList.remove('show');
-        toast.removeEventListener('click', handleClick);
+        // wait for the CSS transition to finish before cleaning up
+        setTimeout(() => toast.removeEventListener('click', handleClick), 500);
+    }, duration);
+}
+
+// Complex toast helper: supports swipe-to-dismiss and richer interactions used by endGame
+function _complexToast(toastClass, toastMessage, duration = 5000) {
+    const toast = document.getElementById('toast');
+    if (!toast) return;
+
+    toast.className = `toast ${toastClass}`;
+    toast.innerHTML = toastMessage;
+
+    // Add swipe and click functionality (kept from previous inline implementation)
+    let startY = 0;
+    let startX = 0;
+    let currentY = 0;
+    let isDragging = false;
+    let autoHideTimeout;
+    const TRANSITION_MS = 500;
+
+    function _cleanupListeners() {
+        try {
+            toast.removeEventListener('touchstart', handleTouchStart);
+            toast.removeEventListener('touchmove', handleTouchMove);
+            toast.removeEventListener('touchend', handleTouchEnd);
+            toast.removeEventListener('mousedown', handleMouseDown);
+            toast.removeEventListener('mousemove', handleMouseMove);
+            toast.removeEventListener('mouseup', handleMouseUp);
+            toast.removeEventListener('click', handleClick);
+        } catch (e) {}
+    toast.style.transform = '';
+        clearTimeout(autoHideTimeout);
+    }
+
+    const dismissToast = () => {
+        // remove the visible class to trigger CSS fade
+        toast.classList.remove('show');
+        // after the CSS transition completes, cleanup listeners and inline styles
+        setTimeout(_cleanupListeners, TRANSITION_MS);
+    };
+
+    const handleClick = (e) => {
+        if (!isDragging) {
+            toast.classList.remove('swiping');
+            // trigger slide-up & cleanup
+            dismissToast();
+        }
+    };
+
+    const handleTouchStart = (e) => {
+        startY = e.touches[0].clientY;
+        startX = e.touches[0].clientX;
+        currentY = startY;
+        isDragging = false;
+    };
+
+    const handleTouchMove = (e) => {
+        currentY = e.touches[0].clientY;
+        const deltaY = currentY - startY;
+        const deltaX = Math.abs(e.touches[0].clientX - startX);
+        if (Math.abs(deltaY) > 5 || deltaX > 5) {
+            isDragging = true;
+            toast.classList.add('swiping');
+        }
+        if (deltaY < 0 && isDragging) {
+            e.preventDefault();
+            toast.style.transform = `translateX(0) translateY(${deltaY}px)`;
+        }
+    };
+
+    const handleTouchEnd = () => {
+        toast.classList.remove('swiping');
+        const deltaY = currentY - startY;
+            if (deltaY < -50) {
+                toast.style.transform = 'translateX(0) translateY(-100px)';
+                // trigger slide-up & cleanup
+                dismissToast();
+            } else {
+                toast.style.transform = 'translateX(0) translateY(0)';
+            }
+    };
+
+    const handleMouseDown = (e) => {
+        startY = e.clientY;
+        currentY = startY;
+        isDragging = false;
+        document.addEventListener('mousemove', handleMouseMove);
+        document.addEventListener('mouseup', handleMouseUp);
+    };
+
+    const handleMouseMove = (e) => {
+        currentY = e.clientY;
+        const deltaY = currentY - startY;
+        if (Math.abs(deltaY) > 5) {
+            isDragging = true;
+            toast.classList.add('swiping');
+        }
+        if (deltaY < 0 && isDragging) {
+            toast.style.transform = `translateX(0) translateY(${deltaY}px)`;
+        }
+    };
+
+    const handleMouseUp = () => {
+        toast.classList.remove('swiping');
+        document.removeEventListener('mousemove', handleMouseMove);
+        document.removeEventListener('mouseup', handleMouseUp);
+        const deltaY = currentY - startY;
+            if (deltaY < -50) {
+                toast.style.transform = 'translateX(0) translateY(-100px)';
+                // trigger slide-up & cleanup
+                dismissToast();
+            } else {
+                toast.style.transform = 'translateX(0) translateY(0)';
+            }
+    };
+
+    toast.addEventListener('touchstart', handleTouchStart, { passive: false });
+    toast.addEventListener('touchmove', handleTouchMove, { passive: false });
+    toast.addEventListener('touchend', handleTouchEnd);
+    toast.addEventListener('mousedown', handleMouseDown);
+    toast.addEventListener('click', handleClick);
+
+    // show and auto-hide
+    setTimeout(() => toast.classList.add('show'), 100);
+    autoHideTimeout = setTimeout(() => {
+        dismissToast();
     }, duration);
 }
 
@@ -732,11 +726,18 @@ if (addChipsBtn) {
 
 /* ===== DELETE PLAYER DATA FUNCTIONS - START ===== */
 function showDeleteConfirm() {
-    document.getElementById('slide-confirm').classList.add('active');
+    const el = document.getElementById('slide-confirm');
+    if (!el) return;
+    el.classList.remove('hidden');
+    el.classList.add('active');
 }
 
 function cancelDelete() {
-    document.getElementById('slide-confirm').classList.remove('active');
+    const el = document.getElementById('slide-confirm');
+    if (el) {
+        el.classList.remove('active');
+        el.classList.add('hidden');
+    }
     resetSlider();
 }
 
@@ -865,3 +866,19 @@ function deleteAllData() {
 loadGameData();
 createDeck();
 updateDisplay();
+
+// Hide and remove the custom splash (if present) after initialization
+try {
+    const _splash = document.getElementById('splash');
+    if (_splash) {
+        // small delay to allow initial paint, then fade out
+        setTimeout(() => {
+            _splash.classList.add('splash--hide');
+            setTimeout(() => {
+                _splash.remove();
+            }, 600);
+        }, 320);
+    }
+} catch (e) {
+    // do nothing if DOM not available or removal fails
+}

@@ -1,24 +1,37 @@
 // TODO: Clean this up
 .confirmDelete {
-    animation: slideUp 0.5s ease forwards;
     background: var(--offWhite);
     border-radius: 1rem 1rem 0 0;
     bottom: -6rem;
-    display: none;
+    display: grid;
+    gap: .5rem;
+    grid-template-columns: auto max-content;
     padding: 1rem;
     position: absolute;
     width: 100%;
     z-index: 3000;
 
     &.active {
-        display: grid;
-        grid-template-columns: auto max-content;
-        gap: .5rem;
+        animation: slideUp 0.5s ease forwards;
+        visibility: visible;
+    }
+
+    &.hidden {
+        animation: slideDown 0.5s ease forwards;
+    }
+
+    @keyframes slideDown {
+        from {
+            bottom: 0;
+        }
+        to {
+            bottom: -7rem;
+        }
     }
 
     @keyframes slideUp {
         from {
-            bottom: -6rem;
+            bottom: -7rem;
         }
         to {
             bottom: 0;

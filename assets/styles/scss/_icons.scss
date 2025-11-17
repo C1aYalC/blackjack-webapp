@@ -149,3 +149,9 @@ span {
         content: '\f890';
     }
 }
+
+.trophyIcon {
+    &::before {
+        content: '\f091';
+    }
+}
