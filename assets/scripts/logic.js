@@ -16,6 +16,9 @@ let stats = {
     totalLost: 0
 };
 
+// Timer used to hide the slide-confirm after its slide-down transition completes
+let _deleteHideTimer = null;
+
 function loadGameData() {
     try {
         const savedBalance = localStorage.getItem('blackjack_balance');
@@ -406,7 +409,7 @@ function endGame(outcome, winAmount = 0, extraMessage = '') {
     } else if (outcome === 'push') {
         balance += winAmount;
         toastClass = 'push';
-        toastMessage = extraMessage || `<span class="flagIcon"></span>Push! You get to keep your ${formatNumber(currentBet)} chips!`;
+        toastMessage = extraMessage || `<span class="flagIcon"></span>Push! You keep your ${formatNumber(currentBet)} chips!`;
     }
 
     updateDisplay();
@@ -465,10 +468,27 @@ function showStatsFromBet() {
 function closeStats() {
     document.getElementById('stats-modal').classList.remove('active');
     // Also ensure the delete confirmation slide is closed and reset
-    const slideConfirm = document.getElementById('slide-confirm');
-    if (slideConfirm) {
-        slideConfirm.classList.remove('active');
+    const el = document.getElementById('slide-confirm');
+    if (!el) {
+        if (typeof resetSlider === 'function') resetSlider();
+        return;
     }
+
+    // Clear any pending hide timer so we don't race
+    if (_deleteHideTimer) {
+        clearTimeout(_deleteHideTimer);
+        _deleteHideTimer = null;
+    }
+
+    // Remove active so the SCSS transition can move it down
+    el.classList.remove('active');
+
+    // After the CSS transition completes (500ms), add the hidden marker and remove from layout
+    _deleteHideTimer = setTimeout(() => {
+        try { el.classList.add('hidden'); el.style.display = 'none'; } catch (e) {}
+        _deleteHideTimer = null;
+    }, 500);
+
     // Reset slider UI so it's not left half-dragged
     if (typeof resetSlider === 'function') resetSlider();
 }
@@ -728,16 +748,47 @@ if (addChipsBtn) {
 function showDeleteConfirm() {
     const el = document.getElementById('slide-confirm');
     if (!el) return;
+    // If there's a pending hide timeout, cancel it so we stay visible
+    if (_deleteHideTimer) {
+        clearTimeout(_deleteHideTimer);
+        _deleteHideTimer = null;
+    }
+
+    // Ensure it's rendered in the layout so the slide animation can run
+    el.style.display = 'grid';
+    // Remove hidden marker and force a reflow so the transition starts from the correct position
     el.classList.remove('hidden');
+    // Force reflow
+    // eslint-disable-next-line no-unused-expressions
+    el.offsetHeight;
+    // Add active to trigger the slide-up transition defined in SCSS
     el.classList.add('active');
 }
 
 function cancelDelete() {
     const el = document.getElementById('slide-confirm');
-    if (el) {
-        el.classList.remove('active');
-        el.classList.add('hidden');
+    if (!el) {
+        resetSlider();
+        return;
     }
+
+
+    // Remove active so the SCSS transition can move it down
+    el.classList.remove('active');
+    // Do NOT add the .hidden class immediately — wait until the transition finishes
+
+    // Clear any previous timer
+    if (_deleteHideTimer) {
+        clearTimeout(_deleteHideTimer);
+        _deleteHideTimer = null;
+    }
+
+    // After the CSS transition completes (500ms), add the hidden marker and remove from layout
+    _deleteHideTimer = setTimeout(() => {
+        try { el.classList.add('hidden'); el.style.display = 'none'; } catch (e) {}
+        _deleteHideTimer = null;
+    }, 500);
+
     resetSlider();
 }
 
@@ -877,7 +928,7 @@ try {
             setTimeout(() => {
                 _splash.remove();
             }, 600);
-        }, 320);
+        }, 640);
     }
 } catch (e) {
     // do nothing if DOM not available or removal fails

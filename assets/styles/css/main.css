@@ -432,6 +432,11 @@ span::before {
   }
 }
 
+@media (min-width: 768px) {
+  .modal-content {
+    max-width: 40vw;
+  }
+}
 #stats-modal .modal-content {
   border-radius: 0.5rem;
 }
@@ -579,40 +584,38 @@ span::before {
   line-height: 1;
 }
 
+@media (min-width: 768px) {
+  .toast {
+    max-width: 48rem;
+  }
+}
 .confirmDelete {
   background: var(--offWhite);
   border-radius: 1rem 1rem 0 0;
   bottom: -6rem;
-  display: grid;
+  display: none;
   gap: 0.5rem;
   grid-template-columns: auto max-content;
   padding: 1rem;
+  pointer-events: none;
   position: absolute;
+  transition: bottom 0.5s ease, visibility 0s linear 0.5s;
+  visibility: hidden;
   width: 100%;
   z-index: 3000;
 }
 .confirmDelete.active {
-  animation: slideUp 0.5s ease forwards;
+  bottom: 0;
+  justify-self: center;
+  pointer-events: auto;
+  transition-delay: 0s;
   visibility: visible;
 }
 .confirmDelete.hidden {
-  animation: slideDown 0.5s ease forwards;
-}
-@keyframes slideDown {
-  from {
-    bottom: 0;
-  }
-  to {
-    bottom: -7rem;
-  }
-}
-@keyframes slideUp {
-  from {
-    bottom: -7rem;
-  }
-  to {
-    bottom: 0;
-  }
+  bottom: -6rem;
+  visibility: hidden;
+  pointer-events: none;
+  transition-delay: 0.5s;
 }
 .confirmDelete button {
   border-radius: 0.5rem;
@@ -734,6 +737,11 @@ span::before {
   100% {
     opacity: 1;
     transform: scale(1);
+  }
+}
+@media (min-width: 768px) {
+  .confirmDelete {
+    max-width: 48rem;
   }
 }
 #splash {
@@ -965,9 +973,10 @@ header .currentChipTotal .plusIcon {
 @media (min-width: 768px) {
   html {
     background-color: var(--primaryGreenDarken75);
+    overflow-y: hidden;
   }
   body {
-    max-width: 768px;
+    max-width: 48rem;
     margin: 0 auto;
   }
   .playerActions {

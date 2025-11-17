@@ -233,9 +233,10 @@ header {
 @media (min-width: 768px) {
     html {
         background-color: var(--primaryGreenDarken75);
+        overflow-y: hidden;
     }
     body{
-        max-width: 768px;
+        max-width: 48rem;
         margin: 0 auto;
     }
     .playerActions {
