@@ -535,28 +535,35 @@ span::before {
 }
 
 .toast {
+  animation: boxShadowHide 0.5s ease forwards;
   border-radius: 0 0 1rem 1rem;
   border: none;
   cursor: pointer;
   display: grid;
-  filter: drop-shadow(0 1rem 2rem rgb(0, 0, 0));
   font-size: 1.125rem;
   font-weight: bold;
   gap: 0.5rem;
   justify-items: center;
   justify-self: center;
-  opacity: 0;
   padding: 1rem;
   pointer-events: auto;
   position: absolute;
   text-align: center;
   top: -6rem;
-  transition: top 0.5s ease, opacity 0.5s ease;
+  transition: top 0.5s ease;
   -webkit-user-select: none;
      -moz-user-select: none;
           user-select: none;
   width: 100%;
   z-index: 2000;
+}
+@keyframes boxShadowHide {
+  from {
+    filter: drop-shadow(0 1rem 2rem rgb(0, 0, 0));
+  }
+  to {
+    filter: none;
+  }
 }
 .toast:active {
   cursor: grabbing;
@@ -575,9 +582,17 @@ span::before {
 }
 .toast.show {
   top: 0;
-  opacity: 1;
+  animation: boxShadowShow 0.5s ease forwards;
   pointer-events: auto;
   visibility: visible;
+}
+@keyframes boxShadowShow {
+  from {
+    filter: none;
+  }
+  to {
+    filter: drop-shadow(0 1rem 2rem rgb(0, 0, 0));
+  }
 }
 .toast.swiping {
   transition: none;
