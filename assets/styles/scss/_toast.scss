@@ -13,7 +13,7 @@
     pointer-events: auto;
     position: absolute;
     text-align: center;
-    top: -6rem;
+    top: -7rem;
     transition: top 0.5s ease;
     user-select: none;
     width: 100%;
@@ -21,7 +21,7 @@
 
     @keyframes boxShadowHide {
         from {
-            filter: drop-shadow(0 1rem 2rem rgba(0,0,0,1));
+            filter: drop-shadow(0 2rem 1rem rgba(0,0,0,.9));
         }
         to {
             filter: none;
@@ -59,7 +59,7 @@
                 filter: none;
             }
             to {
-                filter: drop-shadow(0 1rem 2rem rgba(0,0,0,1));
+                filter: drop-shadow(0 2rem 1rem rgba(0,0,0,.9));
             }
         }
     }

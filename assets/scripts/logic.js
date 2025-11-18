@@ -254,7 +254,7 @@ function placeBet() {
                 if (dealerBlackjack && playerBlackjack) {
                     stats.pushes++;
                     updateStatsDisplay();
-                    endGame('push', currentBet, '<span class="pushIcon"></span><p>Two natural blackjacks!? That is crazy.</p>');
+                    endGame('push', currentBet, '<span class="flagIcon"></span><p>Two natural blackjacks!? That is crazy.</p>');
                 } else if (dealerBlackjack) {
                     stats.losses++;
                     stats.totalLost += currentBet;
@@ -426,7 +426,7 @@ function endGame(outcome, winAmount = 0, extraMessage = '') {
     }
     // show the toast and immediately swap the UI so the player can inspect
     // the final hands and manually start the next round via Play Again.
-    const duration = 5000;
+    const duration = 2500;
     const playBtn = document.getElementById('playAgainButton');
 
     // If there's a pending balance change, apply it only after the toast is dismissed
@@ -601,7 +601,7 @@ function closeRules() {
 }
 
 
-function showToast(toastClass, toastMessage, duration = 5000) {
+function showToast(toastClass, toastMessage, duration = 2500) {
     const toast = document.getElementById('toast');
     if (!toast) return;
 
@@ -626,7 +626,7 @@ function showToast(toastClass, toastMessage, duration = 5000) {
 }
 
 // Complex toast helper: supports swipe-to-dismiss and richer interactions used by endGame
-function _complexToast(toastClass, toastMessage, duration = 5000, onDismiss) {
+function _complexToast(toastClass, toastMessage, duration = 2500, onDismiss) {
     const toast = document.getElementById('toast');
     if (!toast) return;
 
@@ -760,7 +760,7 @@ function _complexToast(toastClass, toastMessage, duration = 5000, onDismiss) {
 
 // Add chips helper — increases player's balance by a fixed amount (default 10,000)
 // Restrictions:
-// - max 10 clicks per 30 minutes (tracked in localStorage)
+// - max 10 clicks per 15 minutes (tracked in localStorage)
 // - cannot add if balance is over 100,000
 function getAddChipsTimestamps() {
     try {
@@ -803,7 +803,7 @@ function _scheduleAddChipsToast(amount) {
 function addChips(amount = 10000) {
     const MAX_BALANCE = 100000; // user-specified cap
     const LIMIT_COUNT = 10;
-    const LIMIT_WINDOW_MS = 15 * 60 * 1000; // 30 minutes
+    const LIMIT_WINDOW_MS = 15 * 60 * 1000; // 15 minutes
 
     // If balance is over cap, show toast and refuse
     if (balance > MAX_BALANCE) {
