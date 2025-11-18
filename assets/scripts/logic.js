@@ -170,8 +170,8 @@ function placeBet() {
     const betInput = document.getElementById('bet-modal-input');
     const bet = parseInt(betInput.value);
 
-    if (bet < 500) {
-        alert('Minimum bet is 500 Chips!');
+    if (bet < 100) {
+        alert('Minimum bet is 100 Chips!');
         return;
     }
 
@@ -436,7 +436,7 @@ function resetGame() {
 
     updateDisplay();
 
-    if (balance < 500) {
+    if (balance < 100) {
         alert('You ran out of Chips! Resetting to 10,000.');
         balance = 10000;
         saveGameData();
@@ -444,7 +444,7 @@ function resetGame() {
     }
 
     document.getElementById('bet-modal').classList.add('active');
-    document.getElementById('bet-modal-input').value = 500;
+    document.getElementById('bet-modal-input').value = 100;
 }
 
 function updateStatsDisplay() {
