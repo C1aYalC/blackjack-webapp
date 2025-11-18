@@ -16,6 +16,10 @@ let stats = {
     totalLost: 0
 };
 
+// Pending balance delta applied after toast dismiss or when Play Again is pressed
+let pendingBalanceDelta = 0;
+let _pendingBalanceApplied = false;
+
 // Timer used to hide the slide-confirm after its slide-down transition completes
 let _deleteHideTimer = null;
 
@@ -405,7 +409,9 @@ function determineWinner() {
 
 function endGame(outcome, winAmount = 0, extraMessage = '') {
     gameActive = false;
-    let pendingBalanceDelta = 0;
+    // reset module-level pending delta and mark as not applied yet
+    pendingBalanceDelta = 0;
+    _pendingBalanceApplied = false;
     if (outcome === 'victory') {
         pendingBalanceDelta = winAmount;
         toastClass = 'victory';
@@ -431,14 +437,17 @@ function endGame(outcome, winAmount = 0, extraMessage = '') {
 
     // If there's a pending balance change, apply it only after the toast is dismissed
     const onToastDismiss = () => {
-        if (pendingBalanceDelta && pendingBalanceDelta !== 0) {
+        if (pendingBalanceDelta && pendingBalanceDelta !== 0 && !_pendingBalanceApplied) {
             const oldBalance = balance;
             balance += pendingBalanceDelta;
             // animate the visible balance so it counts up to the new total
-            animateBalance(oldBalance, balance, 800);
-            // persist new balance and update stats display once applied
-            saveGameData();
-            updateStatsDisplay();
+            animateBalance(oldBalance, balance, 800, () => {
+                // persist new balance and update stats display once animation finishes
+                saveGameData();
+                updateStatsDisplay();
+                _pendingBalanceApplied = true;
+                pendingBalanceDelta = 0;
+            });
         }
     };
 
@@ -457,7 +466,7 @@ function endGame(outcome, winAmount = 0, extraMessage = '') {
 }
 
 // Smoothly animate the balance number from `fromVal` to `toVal` over `durationMs`.
-function animateBalance(fromVal, toVal, durationMs = 800) {
+function animateBalance(fromVal, toVal, durationMs = 800, onComplete) {
     const balanceEl = document.getElementById('balance');
     const statBalanceEl = document.getElementById('stat-balance');
     const betModalEl = document.getElementById('bet-modal-balance');
@@ -481,6 +490,9 @@ function animateBalance(fromVal, toVal, durationMs = 800) {
             if (balanceEl) balanceEl.textContent = formatNumber(toVal);
             if (statBalanceEl) statBalanceEl.textContent = formatNumber(toVal);
             if (betModalEl) betModalEl.textContent = formatNumber(toVal);
+            if (typeof onComplete === 'function') {
+                try { onComplete(); } catch (e) { console.warn('animateBalance onComplete failed', e); }
+            }
         }
     }
 
@@ -529,6 +541,19 @@ function startNewHand() {
 
     // Reset the UI and show the bet modal so the player can place a new bet
     resetGame();
+    // If there's a pending balance change, apply it now since player chose to start a new hand
+    try {
+        if (pendingBalanceDelta && pendingBalanceDelta !== 0 && !_pendingBalanceApplied) {
+            const oldBalance = balance;
+            balance += pendingBalanceDelta;
+            animateBalance(oldBalance, balance, 800, () => {
+                saveGameData();
+                updateStatsDisplay();
+                _pendingBalanceApplied = true;
+                pendingBalanceDelta = 0;
+            });
+        }
+    } catch (e) {}
     // Hide Play Again and restore the in-round action buttons
     try {
         const playBtn = document.getElementById('playAgainButton');
@@ -841,10 +866,11 @@ function addChips(amount = 10000) {
     _scheduleAddChipsToast(amount);
 }
 
-// Attach to a button with id "add-chips" if present in the DOM
-const addChipsBtn = document.getElementById('add-chips');
-if (addChipsBtn) {
-    addChipsBtn.addEventListener('click', () => addChips(10000));
+// Attach to any element(s) intended to add chips (header and modal).
+// Use a shared class `add-chips` (replaces prior duplicate IDs) so both receive the handler.
+const addChipsEls = document.querySelectorAll('.add-chips');
+if (addChipsEls && addChipsEls.length) {
+    addChipsEls.forEach(el => el.addEventListener('click', () => addChips(10000)));
 }
 
 /* ===== DELETE PLAYER DATA FUNCTIONS - START ===== */
