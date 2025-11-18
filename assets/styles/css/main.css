@@ -539,21 +539,22 @@ span::before {
   border: none;
   cursor: pointer;
   display: grid;
+  filter: drop-shadow(0 1rem 2rem rgb(0, 0, 0));
   font-size: 1.125rem;
   font-weight: bold;
   gap: 0.5rem;
   justify-items: center;
   justify-self: center;
+  opacity: 0;
   padding: 1rem;
   pointer-events: auto;
   position: absolute;
   text-align: center;
   top: -6rem;
-  transition: top 0.5s ease;
+  transition: top 0.5s ease, opacity 0.5s ease;
   -webkit-user-select: none;
      -moz-user-select: none;
           user-select: none;
-  visibility: visible;
   width: 100%;
   z-index: 2000;
 }
@@ -574,6 +575,7 @@ span::before {
 }
 .toast.show {
   top: 0;
+  opacity: 1;
   pointer-events: auto;
   visibility: visible;
 }
@@ -935,6 +937,10 @@ header .currentChipTotal .plusIcon {
   background-color: var(--offWhite);
   display: grid;
   gap: 1rem;
+}
+.container.playerActions button#playAgainButton {
+  padding: 1.5rem;
+  grid-template-columns: auto auto;
 }
 .container.playerActions .buttonContainer {
   display: grid;

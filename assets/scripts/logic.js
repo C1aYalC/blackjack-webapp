@@ -203,6 +203,19 @@ function placeBet() {
     playerHand = [drawCard(), drawCard()];
     dealerHand = [drawCard(), drawCard()];
 
+    // Ensure Play Again is disabled while a hand is active
+    try {
+        const playBtn = document.getElementById('playAgainButton');
+        if (playBtn) {
+            playBtn.disabled = true;
+            try { playBtn.style.display = 'none'; } catch (e) {}
+        }
+
+        // Ensure the in-round action buttons are visible when a hand begins
+        const inRoundBtns = document.querySelector('.playerActions .buttonContainer');
+        if (inRoundBtns) inRoundBtns.style.display = '';
+    } catch (e) {}
+
     updateDisplay();
 
     (async function loadRandomTip() {
@@ -392,9 +405,9 @@ function determineWinner() {
 
 function endGame(outcome, winAmount = 0, extraMessage = '') {
     gameActive = false;
-
+    let pendingBalanceDelta = 0;
     if (outcome === 'victory') {
-        balance += winAmount;
+        pendingBalanceDelta = winAmount;
         toastClass = 'victory';
         toastMessage = extraMessage || `<span class="trophyIcon"></span><p>Nice job! You won ${formatNumber(winAmount)} chips!</p>`;
     } else if (outcome === 'bust') {
@@ -402,21 +415,76 @@ function endGame(outcome, winAmount = 0, extraMessage = '') {
         toastMessage = extraMessage || `<span class="bustIcon"></span><p>Oh no! You busted & lost ${formatNumber(currentBet)} chips.</p>`;
     } else if (outcome === 'dealer-wins') {
         if (winAmount > 0) {
-            balance += winAmount;
+            pendingBalanceDelta = winAmount;
         }
         toastClass = 'dealer-wins';
         toastMessage = extraMessage || `<span class="heartBreakIcon"></span><p>Tough luck! You lost ${formatNumber(currentBet - winAmount)} chips.</p>`;
     } else if (outcome === 'push') {
-        balance += winAmount;
+        pendingBalanceDelta = winAmount;
         toastClass = 'push';
         toastMessage = extraMessage || `<span class="flagIcon"></span>Push! You keep your ${formatNumber(currentBet)} chips!`;
     }
+    // show the toast and immediately swap the UI so the player can inspect
+    // the final hands and manually start the next round via Play Again.
+    const duration = 5000;
+    const playBtn = document.getElementById('playAgainButton');
 
-    updateDisplay();
-    setTimeout(() => {
-        _complexToast(toastClass, toastMessage, 5000);
-        resetGame();
-    }, 1000);
+    // If there's a pending balance change, apply it only after the toast is dismissed
+    const onToastDismiss = () => {
+        if (pendingBalanceDelta && pendingBalanceDelta !== 0) {
+            const oldBalance = balance;
+            balance += pendingBalanceDelta;
+            // animate the visible balance so it counts up to the new total
+            animateBalance(oldBalance, balance, 800);
+            // persist new balance and update stats display once applied
+            saveGameData();
+            updateStatsDisplay();
+        }
+    };
+
+    _complexToast(toastClass, toastMessage, duration, onToastDismiss);
+
+    if (playBtn) {
+        // enable Play Again so the player can start a new round manually
+        playBtn.disabled = false;
+        try { playBtn.style.display = ''; } catch (e) {}
+    }
+    // Hide the in-round action buttons (Hit/Stand/Double) so player sees final hand
+    try {
+        const inRoundBtns = document.querySelector('.playerActions .buttonContainer');
+        if (inRoundBtns) inRoundBtns.style.display = 'none';
+    } catch (e) {}
+}
+
+// Smoothly animate the balance number from `fromVal` to `toVal` over `durationMs`.
+function animateBalance(fromVal, toVal, durationMs = 800) {
+    const balanceEl = document.getElementById('balance');
+    const statBalanceEl = document.getElementById('stat-balance');
+    const betModalEl = document.getElementById('bet-modal-balance');
+
+    const start = performance.now();
+    const diff = toVal - fromVal;
+    if (!balanceEl && !statBalanceEl && !betModalEl) return;
+
+    function step(now) {
+        const elapsed = Math.min(now - start, durationMs);
+        const progress = elapsed / durationMs;
+        const current = Math.round(fromVal + diff * progress);
+        if (balanceEl) balanceEl.textContent = formatNumber(current);
+        if (statBalanceEl) statBalanceEl.textContent = formatNumber(current);
+        if (betModalEl) betModalEl.textContent = formatNumber(current);
+
+        if (elapsed < durationMs) {
+            requestAnimationFrame(step);
+        } else {
+            // ensure final value is exact
+            if (balanceEl) balanceEl.textContent = formatNumber(toVal);
+            if (statBalanceEl) statBalanceEl.textContent = formatNumber(toVal);
+            if (betModalEl) betModalEl.textContent = formatNumber(toVal);
+        }
+    }
+
+    requestAnimationFrame(step);
 }
 
 function closeOutcome() {
@@ -434,6 +502,12 @@ function resetGame() {
     document.getElementById('standButton').disabled = true;
     document.getElementById('doubleButton').disabled = true;
 
+    // Ensure Play Again is disabled when preparing for a new hand
+    try {
+        const playBtn = document.getElementById('playAgainButton');
+        if (playBtn) playBtn.disabled = true;
+    } catch (e) {}
+
     updateDisplay();
 
     if (balance < 100) {
@@ -445,6 +519,27 @@ function resetGame() {
 
     document.getElementById('bet-modal').classList.add('active');
     document.getElementById('bet-modal-input').value = 100;
+}
+
+// Called by the Play Again button once the player wants to start a new hand
+function startNewHand() {
+    // Dismiss any visible toast
+    const toast = document.getElementById('toast');
+    if (toast) toast.classList.remove('show');
+
+    // Reset the UI and show the bet modal so the player can place a new bet
+    resetGame();
+    // Hide Play Again and restore the in-round action buttons
+    try {
+        const playBtn = document.getElementById('playAgainButton');
+        if (playBtn) {
+            playBtn.disabled = true;
+            try { playBtn.style.display = 'none'; } catch (e) {}
+        }
+
+        const inRoundBtns = document.querySelector('.playerActions .buttonContainer');
+        if (inRoundBtns) inRoundBtns.style.display = '';
+    } catch (e) {}
 }
 
 function updateStatsDisplay() {
@@ -531,7 +626,7 @@ function showToast(toastClass, toastMessage, duration = 5000) {
 }
 
 // Complex toast helper: supports swipe-to-dismiss and richer interactions used by endGame
-function _complexToast(toastClass, toastMessage, duration = 5000) {
+function _complexToast(toastClass, toastMessage, duration = 5000, onDismiss) {
     const toast = document.getElementById('toast');
     if (!toast) return;
 
@@ -545,6 +640,7 @@ function _complexToast(toastClass, toastMessage, duration = 5000) {
     let isDragging = false;
     let autoHideTimeout;
     const TRANSITION_MS = 500;
+    let _dismissCalled = false;
 
     function _cleanupListeners() {
         try {
@@ -563,6 +659,13 @@ function _complexToast(toastClass, toastMessage, duration = 5000) {
     const dismissToast = () => {
         // remove the visible class to trigger CSS fade
         toast.classList.remove('show');
+        // call onDismiss once (before cleanup) so callers can react to dismissal
+        try {
+            if (typeof onDismiss === 'function' && !_dismissCalled) {
+                _dismissCalled = true;
+                try { onDismiss(); } catch (e) { console.warn('onDismiss handler failed', e); }
+            }
+        } catch (e) {}
         // after the CSS transition completes, cleanup listeners and inline styles
         setTimeout(_cleanupListeners, TRANSITION_MS);
     };
@@ -704,7 +807,7 @@ function addChips(amount = 10000) {
 
     // If balance is over cap, show toast and refuse
     if (balance > MAX_BALANCE) {
-        showToast('dealer-wins', `<span class="skullIcon"></span><p>C'mon. Your balance is over ${MAX_BALANCE.toLocaleString()}.</p>`);
+        showToast('dealer-wins', `<span class="skullIcon"></span><p>Sorry, you have over ${MAX_BALANCE.toLocaleString()} chips.</p>`);
         return;
     }
 
@@ -917,6 +1020,15 @@ function deleteAllData() {
 loadGameData();
 createDeck();
 updateDisplay();
+
+// Ensure Play Again is disabled on initial load
+try {
+    const playBtn = document.getElementById('playAgainButton');
+    if (playBtn) {
+        playBtn.disabled = true;
+        try { playBtn.style.display = 'none'; } catch (e) {}
+    }
+} catch (e) {}
 
 // Hide and remove the custom splash (if present) after initialization
 try {

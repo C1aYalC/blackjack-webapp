@@ -183,6 +183,13 @@ header {
         display: grid;
         gap: 1rem;
 
+        button {
+            &#playAgainButton {
+                padding: 1.5rem;
+                grid-template-columns: auto auto;
+            }
+        }
+
         .buttonContainer {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;

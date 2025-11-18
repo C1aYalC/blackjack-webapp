@@ -30,6 +30,7 @@
                 <div class="currentChipTotal">
                     <span class="coinIcon"></span>
                     <p id="balance">10000</p>
+                    <span class="plusIcon" id="add-chips"></span>
                 </div>
                 <div class="buttonContainer">
                     <button class="primaryButton smallButton playerStats" onclick="showStatsFromBet()">
@@ -72,6 +73,10 @@
             </section>
         </main>
         <div class="container playerActions">
+            <button class="primaryButton" id="playAgainButton" onclick="startNewHand()">
+                <span class="refreshIcon"></span>
+                <p>Play Again</p>
+            </button>
             <div class="buttonContainer">
                 <button class="primaryButton" id="hitButton" onclick="hit()">Hit</button>
                 <button class="secondaryButton" id="standButton" onclick="stand()">Stand</button>

@@ -3,19 +3,20 @@
     border: none;
     cursor: pointer;
     display: grid;
+    filter: drop-shadow(0 1rem 2rem rgba(0,0,0,1));
     font-size: 1.125rem;
     font-weight: bold;
     gap: .5rem;
     justify-items: center;
     justify-self: center;
+    opacity: 0;
     padding: 1rem;
     pointer-events: auto;
     position: absolute;
     text-align: center;
     top: -6rem;
-    transition: top 0.5s ease;
+    transition: top 0.5s ease, opacity 0.5s ease;
     user-select: none;
-    visibility: visible;
     width: 100%;
     z-index: 2000;
 
@@ -41,6 +42,7 @@
 
     &.show {
         top: 0;
+        opacity: 1;
         pointer-events: auto;
         visibility: visible;
     }
