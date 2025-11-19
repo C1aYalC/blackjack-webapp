@@ -192,7 +192,7 @@ header {
 
         .buttonContainer {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-columns: 1fr 1fr;
             gap: 1rem;
 
             button {
@@ -201,6 +201,11 @@ header {
                 grid-template-columns: 1fr;
                 text-align: center;
             }
+        }
+
+        .secondaryButtonContainer {
+            display: grid;
+            gap: 1rem;
         }
 
         .quickTips {
