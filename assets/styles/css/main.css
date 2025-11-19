@@ -984,9 +984,12 @@ header .currentChipTotal .plusIcon {
   border-radius: 0 0 1rem 1rem;
   display: grid;
   gap: 1rem;
+  grid-template-rows: 1fr 1fr;
+}
+.container.playerActions button {
+  padding: 0;
 }
 .container.playerActions button#playAgainButton {
-  padding: 1.5rem;
   grid-template-columns: auto auto;
 }
 .container.playerActions .buttonContainer {
@@ -1013,6 +1016,7 @@ header .currentChipTotal .plusIcon {
   font-size: 0.875rem;
   gap: 0.5rem;
   justify-content: center;
+  height: 6.875rem;
   padding: 1rem;
   text-align: center;
 }

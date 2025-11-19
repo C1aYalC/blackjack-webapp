@@ -183,10 +183,12 @@ header {
         border-radius: 0 0 1rem 1rem;
         display: grid;
         gap: 1rem;
+        grid-template-rows: 1fr 1fr;
 
         button {
+            padding: 0;
+
             &#playAgainButton {
-                padding: 1.5rem;
                 grid-template-columns: auto auto;
             }
         }
@@ -218,6 +220,7 @@ header {
             font-size: .875rem;
             gap: .5rem;
             justify-content: center;
+            height: 6.875rem;
             padding: 1rem;
             text-align: center;
 
