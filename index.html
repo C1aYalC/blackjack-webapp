@@ -78,10 +78,19 @@
                 <p>Play Again</p>
             </button>
             <div class="buttonContainer">
-                <button class="primaryButton" id="hitButton" onclick="hit()">Hit</button>
+                <button class="primaryButton" id="hitButton" onclick="hit()">
+                    <span class="hitIcon"></span>
+                    <p>Hit</p>
+                </button>
                 <div class="secondaryButtonContainer">
-                    <button class="secondaryButton" id="standButton" onclick="stand()">Stand</button>
-                    <button class="tertiaryButton" id="doubleButton" onclick="doubleDown()">Double Down</button>
+                    <button class="secondaryButton" id="standButton" onclick="stand()">
+                        <span class="cancelIcon"></span>
+                        <p>Stand</p>
+                    </button>
+                    <button class="tertiaryButton" id="doubleButton" onclick="doubleDown()">
+                        <span class="doubleDownIcon"></span> 
+                        <p>Double Down</p>
+                    </button>
                 </div>
             </div>
             <div class="quickTips">

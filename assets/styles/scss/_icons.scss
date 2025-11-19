@@ -16,6 +16,12 @@ span {
     }
 }
 
+.cancelIcon {
+    &::before {
+        content: '\f05e';
+    }
+}
+
 .cardIcon {
     &::before {
         content: '\e4df';
@@ -65,6 +71,12 @@ span {
     }
 }
 
+.doubleDownIcon {
+    &::before {
+        content: '\f322';
+    }
+}
+
 .flagIcon {
     &::before {
         content: '\f024';
@@ -81,6 +93,12 @@ span {
 .heartBreakIcon {
     &::before {
         content: '\f7a9';
+    }
+}
+
+.hitIcon {
+    &::before {
+        content: '\f6de';
     }
 }
 
