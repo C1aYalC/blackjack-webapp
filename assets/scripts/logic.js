@@ -175,12 +175,12 @@ function placeBet() {
     const bet = parseInt(betInput.value);
 
     if (bet < 100) {
-        alert('Minimum bet is 100 Chips!');
+        showToast('dealer-wins', `<span class="chipIcon"></span><p>The minimum bet is 100 chips!</p>`);
         return;
     }
 
     if (bet > balance) {
-        alert('Insufficient Chips!');
+        showToast('dealer-wins', `<span class="skullIcon"></span><p>You don't have enough chips!</p>`);
         return;
     }
 
@@ -311,7 +311,7 @@ function stand() {
 
 function doubleDown() {
     if (!gameActive || balance < currentBet) {
-        alert('Insufficient Chips to double down!');
+        showToast('dealer-wins', `<p>Insufficient Chips to double down!</p>`);
         return;
     }
 
@@ -331,12 +331,12 @@ function doubleDown() {
 
 function split() {
     if (!gameActive || balance < currentBet) {
-        alert('Insufficient Chips to split!');
+        showToast('dealer-wins', `<p>Insufficient Chips to split!</p>`);
         return;
     }
 
     if (playerHand[0].rank !== playerHand[1].rank) {
-        alert('Can only split matching cards!');
+        showToast('dealer-wins', `<p>Can only split matching cards!</p>`);
         return;
     }
 
@@ -523,7 +523,8 @@ function resetGame() {
     updateDisplay();
 
     if (balance < 100) {
-        alert('You ran out of Chips! Resetting to 10,000.');
+        // Inform the player via toast and reset balance
+        showToast('chips-added', `<span class="coinIcon"></span><p>You ran out of Chips! Resetting to 10,000.</p>`);
         balance = 10000;
         saveGameData();
         updateDisplay();

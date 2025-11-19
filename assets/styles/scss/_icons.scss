@@ -71,6 +71,12 @@ span {
     }
 }
 
+.dollarBillIcon {
+    &::before {
+        content: '\f53b';
+    }
+}
+
 .doubleDownIcon {
     &::before {
         content: '\f322';

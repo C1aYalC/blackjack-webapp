@@ -255,6 +255,10 @@ span::before {
   content: "\e23b";
 }
 
+.dollarBillIcon::before {
+  content: "\f53b";
+}
+
 .doubleDownIcon::before {
   content: "\f322";
 }
@@ -615,11 +619,7 @@ span::before {
   background-color: var(--accentColor);
   color: var(--offWhite);
 }
-.toast.chips-added {
-  background-color: var(--primaryGoldLighten);
-  color: var(--primaryGoldDarken);
-}
-.toast.push {
+.toast.push, .toast.chips-added {
   background-color: var(--primaryGoldLighten);
   color: var(--primaryGoldDarken);
 }
