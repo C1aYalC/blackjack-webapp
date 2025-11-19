@@ -830,7 +830,7 @@ span::before {
 }
 
 html {
-  background-color: var(--offWhite);
+  background-color: var(--primaryGreenDarken75);
   color: var(--offBlack);
 }
 
@@ -981,6 +981,7 @@ header .currentChipTotal .plusIcon {
 }
 .container.playerActions {
   background-color: var(--offWhite);
+  border-radius: 0 0 1rem 1rem;
   display: grid;
   gap: 1rem;
 }
@@ -1035,7 +1036,6 @@ header .currentChipTotal .plusIcon {
 
 @media (min-width: 768px) {
   html {
-    background-color: var(--primaryGreenDarken75);
     overflow-y: hidden;
   }
   body {

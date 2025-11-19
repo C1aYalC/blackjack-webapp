@@ -9,7 +9,7 @@
 @use '../scss/splash';
 
 html {
-    background-color: var(--offWhite);
+    background-color: var(--primaryGreenDarken75);
     color: var(--offBlack);
 }
 
@@ -180,6 +180,7 @@ header {
 
     &.playerActions {
         background-color: var(--offWhite);
+        border-radius: 0 0 1rem 1rem;
         display: grid;
         gap: 1rem;
 
@@ -246,7 +247,6 @@ header {
 
 @media (min-width: 768px) {
     html {
-        background-color: var(--primaryGreenDarken75);
         overflow-y: hidden;
     }
     body{
