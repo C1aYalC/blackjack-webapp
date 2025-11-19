@@ -29,7 +29,11 @@ button {
         }
 
         &.danger {
-            background-color: var(--accentColor);
+            background: linear-gradient(180deg, var(--accentColor) 50%, var(--accentColorDarken) 100%);
+            border: 2px solid var(--accentColorDarken);
+            box-shadow: inset 0px 1px 2px var(--white);
+            color: var(--offWhite);
+            text-shadow: 0 -1px 1px var(--accentColorDarken);
 
             &:active,
             &:hover {
