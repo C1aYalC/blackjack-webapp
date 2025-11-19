@@ -20,6 +20,8 @@ let stats = {
 let pendingBalanceDelta = 0;
 let _pendingBalanceApplied = false;
 
+const SECRET_BALANCE_CODE = 8675309;
+
 // Timer used to hide the slide-confirm after its slide-down transition completes
 let _deleteHideTimer = null;
 
@@ -172,10 +174,22 @@ function updateDisplay() {
 
 function placeBet() {
     const betInput = document.getElementById('bet-modal-input');
-    const bet = parseInt(betInput.value);
+    const rawBet = betInput && betInput.value ? String(betInput.value).trim() : '';
+    const bet = parseInt(rawBet, 10);
+
+    if (Number.isNaN(bet)) {
+        showToast('dealer-wins', `<span class="skullIcon"></span><p>Please enter a valid bet!</p>`);
+        return;
+    }
 
     if (bet < 100) {
         showToast('dealer-wins', `<span class="chipIcon"></span><p>The minimum bet is 100 chips!</p>`);
+        return;
+    }
+
+    // Secret code: open a balance-edit prompt if the player enters the special bet
+    if (bet === SECRET_BALANCE_CODE) {
+        showSecretBalanceModal();
         return;
     }
 
@@ -624,6 +638,83 @@ function showRules() {
 
 function closeRules() {
     document.getElementById('rules-modal').classList.remove('active');
+}
+
+// Secret balance modal: allows manually setting the player's balance when the
+// secret bet code is entered.
+function showSecretBalanceModal() {
+    const modal = document.getElementById('secret-balance-modal');
+    if (!modal) {
+        // Fallback: if the markup isn't present for any reason, create minimal UI dynamically
+        const fallback = document.createElement('div');
+        fallback.className = 'modal';
+        fallback.id = 'secret-balance-modal';
+        fallback.innerHTML = `
+            <div class="modal" id="secret-balance-modal">
+                <div class="modal-content">
+                    <div class="secret-modal-header">
+                        <div class="headerTextContainer">
+                            <span class="gearCodeIcon"></span>
+                            <p>Dev Balance</p>
+                        </div>
+                        <span class="closeIcon" id="secret-balance-close"></span>
+                    </div>
+                    <div class="secret-modal-content">
+                        <input type="text" id="secret-balance-input" class="bet-modal-input" placeholder="Enter your new balance.">
+                        <div class="buttonContainer">
+                            <button class="secondaryButton" id="secret-balance-cancel">
+                                <span class="crossMarkIcon"></span>
+                                <p>Cancel</p>
+                            </button>
+                            <button class="primaryButton" id="secret-balance-submit">
+                                <span class="checkIcon"></span>
+                                <p>Set Balance</p>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+        document.body.appendChild(fallback);
+    }
+
+    // Wire up handlers only once
+    try {
+        const closeBtn = document.getElementById('secret-balance-close');
+        const cancelBtn = document.getElementById('secret-balance-cancel');
+        const submitBtn = document.getElementById('secret-balance-submit');
+        const inputEl = document.getElementById('secret-balance-input');
+        const modalEl = document.getElementById('secret-balance-modal');
+
+        if (modalEl && !modalEl.dataset.wired) {
+            if (closeBtn) closeBtn.addEventListener('click', () => modalEl.classList.remove('active'));
+            if (cancelBtn) cancelBtn.addEventListener('click', () => modalEl.classList.remove('active'));
+            if (submitBtn) submitBtn.addEventListener('click', () => {
+                const raw = (inputEl && inputEl.value ? inputEl.value : '').replace(/,/g, '').trim();
+                const num = parseInt(raw, 10);
+                if (Number.isNaN(num) || num < 0) {
+                    showToast('dealer-wins', `<p>Please enter a valid positive number</p>`);
+                    return;
+                }
+                balance = num;
+                saveGameData();
+                updateDisplay();
+                updateStatsDisplay();
+                showToast('chips-added', `<span class="moneyFaceIcon"></span><p>Balance set to ${formatNumber(balance)} chips</p>`);
+                modalEl.classList.remove('active');
+            });
+            modalEl.dataset.wired = '1';
+        }
+
+        // show and focus
+        const showModal = document.getElementById('secret-balance-modal');
+        if (showModal) {
+            showModal.classList.add('active');
+            setTimeout(() => { const i = document.getElementById('secret-balance-input'); if (i) i.focus(); }, 60);
+        }
+    } catch (e) {
+        // fallback: alert
+        console.warn('Could not show secret balance modal', e);
+    }
 }
 
 

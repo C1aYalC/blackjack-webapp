@@ -230,6 +230,10 @@ span::before {
   content: "\f51e";
 }
 
+.checkIcon::before {
+  content: "\f058";
+}
+
 .chipIcon::before {
   content: "\f85c";
 }
@@ -267,6 +271,10 @@ span::before {
   content: "\f024";
 }
 
+.gearCodeIcon::before {
+  content: "\e5e8";
+}
+
 .heartIcon::before {
   color: var(--accentColor);
   content: "\f004";
@@ -286,6 +294,10 @@ span::before {
 
 .medalIcon::before {
   content: "\f5a2";
+}
+
+.moneyFaceIcon::before {
+  content: "\e39d";
 }
 
 .moneyHandsIcon::before {
@@ -839,6 +851,54 @@ span::before {
 #splash.splash--hide {
   opacity: 0;
   visibility: hidden;
+}
+
+.modal .secret-modal-header {
+  background-color: var(--accentColor);
+  border-radius: 0.5rem 0.5rem 0 0;
+  color: var(--offWhite);
+  display: grid;
+  font-size: 1.5rem;
+  grid-template-columns: auto max-content;
+  padding: 1rem;
+}
+.modal .secret-modal-header .headerTextContainer {
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: max-content max-content;
+}
+.modal .secret-modal-header .headerTextContainer p {
+  font-family: var(--headingFontFamily);
+}
+.modal .secret-modal-content {
+  display: grid;
+  gap: 0.5rem;
+  padding: 1rem;
+  text-align: left;
+}
+.modal .secret-modal-content input {
+  background-color: var(--white);
+  border: 2px solid var(--neutralGray);
+  border-radius: 0.5rem;
+  font-weight: 700;
+  padding: 1rem;
+  text-align: center;
+}
+.modal .secret-modal-content input:-moz-placeholder {
+  color: var(--neutralGray);
+  font-weight: 500;
+}
+.modal .secret-modal-content input:placeholder-shown {
+  color: var(--neutralGray);
+  font-weight: 500;
+}
+.modal .secret-modal-content .buttonContainer {
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: 1fr 1fr;
+}
+.modal .secret-modal-content .buttonContainer button {
+  align-content: center;
 }
 
 html {

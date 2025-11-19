@@ -288,6 +288,32 @@
             <div class="deleting-spinner" id="deleting-spinner"></div>
             <div class="deleting-text" id="deleting-text">Deleting player data...</div>
         </div>
+        
+        <!-- Secret Balance Modal (developer secret: 8675309) -->
+        <div class="modal" id="secret-balance-modal">
+            <div class="modal-content">
+                <div class="secret-modal-header">
+                    <div class="headerTextContainer">
+                        <span class="gearCodeIcon"></span>
+                        <p>Dev Balance</p>
+                    </div>
+                    <span class="closeIcon" id="secret-balance-close"></span>
+                </div>
+                <div class="secret-modal-content">
+                    <input type="text" id="secret-balance-input" class="bet-modal-input" placeholder="Enter your new balance.">
+                    <div class="buttonContainer">
+                        <button class="secondaryButton" id="secret-balance-cancel">
+                            <span class="crossMarkIcon"></span>
+                            <p>Cancel</p>
+                        </button>
+                        <button class="primaryButton" id="secret-balance-submit">
+                            <span class="checkIcon"></span>
+                            <p>Set Balance</p>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!------------------------->
     </body>
 </html>

@@ -34,6 +34,12 @@ span {
     }
 }
 
+.checkIcon {
+    &::before {
+        content: '\f058';
+    }
+}
+
 .chipIcon {
     &::before {
         content: '\f85c';
@@ -89,6 +95,12 @@ span {
     }
 }
 
+.gearCodeIcon {
+    &::before {
+        content: '\e5e8';
+    }
+}
+
 .heartIcon {
     &::before {
         color: var(--accentColor);
@@ -117,6 +129,12 @@ span {
 .medalIcon {
     &::before {
         content: '\f5a2';
+    }
+}
+
+.moneyFaceIcon {
+    &::before {
+        content: '\e39d';
     }
 }
 
