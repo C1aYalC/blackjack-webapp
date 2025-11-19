@@ -1,15 +1,15 @@
 button {
     align-items: center;
-    border-radius: .25rem;
+    border-radius: .5rem;
     border: 2px solid transparent;
     cursor: pointer;
     display: grid;
     font-weight: 600;
     gap: .5rem;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: auto max-content;
     justify-content: center;
     padding: 1rem 1.5rem;
-    transition: .25s ease all;
+    text-align: center;
 
     &.smallButton {
         font-size: .875rem;
@@ -24,10 +24,6 @@ button {
         color: var(--offWhite);
         text-shadow: 0 -1px 1px var(--primaryGreenDarken50);
 
-        &:active {
-            background-color: var(--primaryGreenDarken50);
-        }
-
         &.danger {
             background: linear-gradient(180deg, var(--accentColor) 50%, var(--accentColorDarken) 100%);
             border: 2px solid var(--accentColorDarken);
@@ -37,12 +33,12 @@ button {
 
             &:active,
             &:hover {
-                background-color: var(--accentColorDarken);
+                background: var(--accentColor);
             }
         }
 
         &:hover {
-            background-color: var(--primaryGreenDarken);
+            background: var(--primaryGreen);
         }
     }
 
@@ -54,9 +50,7 @@ button {
         text-shadow: 0 -1px 1px var(--white);
 
         &:hover {
-            background-color: var(--primaryGreen);
-            border-color: transparent;
-            color: var(--offWhite);
+            background: var(--offWhite);
         }
 
         &:active {
@@ -66,15 +60,13 @@ button {
 
     &.tertiaryButton {
         background: linear-gradient(180deg, var(--primaryGreenDarken) 50%, var(--primaryGreenDarken75) 100%);
-        border: 2px solid var(--primaryGreenDarken);
+        border: 2px solid var(--primaryGreenDarken75);
         box-shadow: inset 0px 2px 2px rgba(255, 255, 255, .35);
         color: var(--offWhite);
         text-shadow: 0 -1px 1px var(--black);
 
         &:hover {
-            background-color: var(--offWhite);
-            border-color: var(--primaryGreen);
-            color: var(--primaryGreen);
+            background: var(--primaryGreenDarken);
         }
 
         &:active {
@@ -88,9 +80,20 @@ button {
     }
 
     &:disabled {
-        background-color: var(--neutralGray);
+        background: var(--neutralGray);
         border-color: transparent;
+        box-shadow: none;
         color: var(--neutralGrayDarken);
         cursor: not-allowed;
+        text-shadow: none;
+
+        &:hover {
+            background: var(--neutralGray);
+            border-color: transparent;
+            box-shadow: none;
+            color: var(--neutralGrayDarken);
+            cursor: not-allowed;
+            text-shadow: none;
+        }
     }
 }

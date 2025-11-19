@@ -46,7 +46,7 @@ header {
     .currentChipTotal {
         align-items: center;
         background-color: var(--primaryGoldLighten);
-        border-radius: .25rem;
+        border-radius: .5rem;
         border: 2px solid var(--primaryGoldDarken);
         color: var(--primaryGoldDarken);
         display: flex;
@@ -79,7 +79,7 @@ header {
 }
 
 .container {
-    padding: 1rem .5rem;
+    padding: 1rem;
 
     &.dealerArea {
         background-color: var(--primaryGreenDarken50);
@@ -88,7 +88,7 @@ header {
     &.playField {
         display: grid;
         gap: 1rem;
-        padding: 1.5rem .5rem;
+        padding: 1.5rem 1rem;
 
         .cardsContainer {
             display: flex;
@@ -119,7 +119,7 @@ header {
                     font-weight: 700;
                     height: 100%;
                     justify-content: center;
-                    min-height: 10.5rem;
+                    min-height: 9.25rem;
                     min-width: 7rem;
                     padding: .5rem;
                     text-align: center;
@@ -137,8 +137,8 @@ header {
                         border-radius: .25rem;
                         display: grid;
                         gap: .5rem;
+                        align-content: center;
                         min-width: 6.25rem;
-                        padding: 2rem;
                     }
                 }
             }
@@ -212,7 +212,9 @@ header {
             align-items: center;
             background-color: var(--white);
             border: 2px solid var(--neutralGray);
+            border-radius: .5rem;
             display: grid;
+            font-size: .875rem;
             gap: .5rem;
             justify-content: center;
             padding: 1rem;

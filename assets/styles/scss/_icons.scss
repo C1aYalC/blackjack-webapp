@@ -120,6 +120,12 @@ span {
     }
 }
 
+.repeatIcon {
+    &::before {
+        content: '\f364';
+    }
+}
+
 .rulesIcon {
     &::before {
         content: '\f02e';

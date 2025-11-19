@@ -74,7 +74,7 @@
         </main>
         <div class="container playerActions">
             <button class="primaryButton" id="playAgainButton" onclick="startNewHand()">
-                <span class="refreshIcon"></span>
+                <span class="repeatIcon"></span>
                 <p>Play Again</p>
             </button>
             <div class="buttonContainer">
@@ -84,13 +84,13 @@
                     <button class="tertiaryButton" id="doubleButton" onclick="doubleDown()">Double Down</button>
                 </div>
             </div>
-            <!-- <div class="quickTips">
+            <div class="quickTips">
                 <div class="quickTipsHeader">
                     <span class="sparkleIcon"></span>
                     <p class="smallHeader">Quick Tip</p>
                 </div>
                 <p class="randomQuickTip">The dealer is required to <strong>hit</strong> on any total of 16 or less and must <strong>stand</strong> once they reach 17 or higher.</p>
-            </div> -->
+            </div>
         </div>
 
         <!-- Toast Notification -->
@@ -103,7 +103,6 @@
                     <div class="bet-modal-chip-balance">
                         <span class="coinIcon"></span>
                         <p class="bet-modal-chips"><span id="bet-modal-balance">10000</span></p>
-                        <span class="plusIcon add-chips"></span>
                     </div>
                     <div class="bet-modal-stats-rules">
                         <button class="primaryButton smallButton playerStats" onclick="showStatsFromBet()" title="Statistics">
@@ -123,10 +122,16 @@
                     </div>
                     <div class="bet-input-container">
                         <input type="number" id="bet-modal-input" class="bet-modal-input" placeholder="100 Chip Minimum Bet" min="100" step="100" value="100">
-                        <button class="primaryButton" onclick="placeBet()">
-                            <span class="chipIcon"></span>
-                            <p>Place Bet</p>
-                        </button>
+                        <div class="betModalButtonContainer">
+                            <button class="secondaryButton add-chips">
+                                <span class="plusIcon"></span>
+                                <p>Add Chips</p>
+                            </button>
+                            <button class="primaryButton" onclick="placeBet()">
+                                <span class="chipIcon"></span>
+                                <p>Place Bet</p>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -123,16 +123,16 @@ meter {
 }
 button {
   align-items: center;
-  border-radius: 0.25rem;
+  border-radius: 0.5rem;
   border: 2px solid transparent;
   cursor: pointer;
   display: grid;
   font-weight: 600;
   gap: 0.5rem;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: auto max-content;
   justify-content: center;
   padding: 1rem 1.5rem;
-  transition: 0.25s ease all;
+  text-align: center;
 }
 button.smallButton {
   font-size: 0.875rem;
@@ -146,9 +146,6 @@ button.primaryButton {
   color: var(--offWhite);
   text-shadow: 0 -1px 1px var(--primaryGreenDarken50);
 }
-button.primaryButton:active {
-  background-color: var(--primaryGreenDarken50);
-}
 button.primaryButton.danger {
   background: linear-gradient(180deg, var(--accentColor) 50%, var(--accentColorDarken) 100%);
   border: 2px solid var(--accentColorDarken);
@@ -157,10 +154,10 @@ button.primaryButton.danger {
   text-shadow: 0 -1px 1px var(--accentColorDarken);
 }
 button.primaryButton.danger:active, button.primaryButton.danger:hover {
-  background-color: var(--accentColorDarken);
+  background: var(--accentColor);
 }
 button.primaryButton:hover {
-  background-color: var(--primaryGreenDarken);
+  background: var(--primaryGreen);
 }
 button.secondaryButton {
   background: linear-gradient(180deg, var(--offWhite) 50%, var(--neutralGray) 100%);
@@ -170,24 +167,20 @@ button.secondaryButton {
   text-shadow: 0 -1px 1px var(--white);
 }
 button.secondaryButton:hover {
-  background-color: var(--primaryGreen);
-  border-color: transparent;
-  color: var(--offWhite);
+  background: var(--offWhite);
 }
 button.secondaryButton:active {
   background-color: var(--primaryGreenDarken);
 }
 button.tertiaryButton {
   background: linear-gradient(180deg, var(--primaryGreenDarken) 50%, var(--primaryGreenDarken75) 100%);
-  border: 2px solid var(--primaryGreenDarken);
+  border: 2px solid var(--primaryGreenDarken75);
   box-shadow: inset 0px 2px 2px rgba(255, 255, 255, 0.35);
   color: var(--offWhite);
   text-shadow: 0 -1px 1px var(--black);
 }
 button.tertiaryButton:hover {
-  background-color: var(--offWhite);
-  border-color: var(--primaryGreen);
-  color: var(--primaryGreen);
+  background: var(--primaryGreenDarken);
 }
 button.tertiaryButton:active {
   background-color: var(--primaryGreen);
@@ -197,10 +190,20 @@ button.quaternaryButton {
   background-color: var(--offBlack);
 }
 button:disabled {
-  background-color: var(--neutralGray);
+  background: var(--neutralGray);
   border-color: transparent;
+  box-shadow: none;
   color: var(--neutralGrayDarken);
   cursor: not-allowed;
+  text-shadow: none;
+}
+button:disabled:hover {
+  background: var(--neutralGray);
+  border-color: transparent;
+  box-shadow: none;
+  color: var(--neutralGrayDarken);
+  cursor: not-allowed;
+  text-shadow: none;
 }
 
 span::before {
@@ -285,6 +288,10 @@ span::before {
   content: "\f01e";
 }
 
+.repeatIcon::before {
+  content: "\f364";
+}
+
 .rulesIcon::before {
   content: "\f02e";
 }
@@ -347,7 +354,7 @@ span::before {
 .modal#bet-modal .bet-modal-header .bet-modal-chip-balance {
   align-items: center;
   background-color: var(--primaryGoldLighten);
-  border-radius: 0.25rem;
+  border-radius: 0.5rem;
   border: 2px solid var(--primaryGoldDarken);
   color: var(--primaryGoldDarken);
   display: flex;
@@ -404,19 +411,30 @@ span::before {
 .modal#bet-modal .bet-modal-content .bet-input-container {
   display: grid;
   gap: 0.5rem;
-  grid-template-columns: auto max-content;
 }
 .modal#bet-modal .bet-modal-content .bet-input-container input {
   background-color: var(--white);
   border: 2px solid var(--neutralGray);
-  font-weight: 600;
-  padding: 1rem 0.5rem;
+  border-radius: 0.5rem;
+  font-weight: 700;
+  padding: 1rem;
+  text-align: center;
 }
 .modal#bet-modal .bet-modal-content .bet-input-container input:-moz-placeholder {
   color: var(--neutralGray);
+  font-weight: 500;
 }
 .modal#bet-modal .bet-modal-content .bet-input-container input:placeholder-shown {
   color: var(--neutralGray);
+  font-weight: 500;
+}
+.modal#bet-modal .bet-modal-content .bet-input-container .betModalButtonContainer {
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: 1fr 1fr;
+}
+.modal#bet-modal .bet-modal-content .bet-input-container .betModalButtonContainer button {
+  align-content: center;
 }
 .modal .modal-content {
   animation: fadeIn 0.5s ease forwards;
@@ -470,7 +488,7 @@ span::before {
 #stats-modal .stats-footer .chipBalance {
   align-items: center;
   background-color: var(--primaryGoldLighten);
-  border-radius: 0.25rem;
+  border-radius: 0.5rem;
   border: 2px solid var(--primaryGoldDarken);
   color: var(--primaryGoldDarken);
   display: flex;
@@ -848,7 +866,7 @@ header .buttonContainer {
 header .currentChipTotal {
   align-items: center;
   background-color: var(--primaryGoldLighten);
-  border-radius: 0.25rem;
+  border-radius: 0.5rem;
   border: 2px solid var(--primaryGoldDarken);
   color: var(--primaryGoldDarken);
   display: flex;
@@ -875,7 +893,7 @@ header .currentChipTotal .plusIcon {
 }
 
 .container {
-  padding: 1rem 0.5rem;
+  padding: 1rem;
 }
 .container.dealerArea {
   background-color: var(--primaryGreenDarken50);
@@ -883,7 +901,7 @@ header .currentChipTotal .plusIcon {
 .container.playField {
   display: grid;
   gap: 1rem;
-  padding: 1.5rem 0.5rem;
+  padding: 1.5rem 1rem;
 }
 .container.playField .cardsContainer {
   display: flex;
@@ -913,7 +931,7 @@ header .currentChipTotal .plusIcon {
   font-weight: 700;
   height: 100%;
   justify-content: center;
-  min-height: 10.5rem;
+  min-height: 9.25rem;
   min-width: 7rem;
   padding: 0.5rem;
   text-align: center;
@@ -929,8 +947,8 @@ header .currentChipTotal .plusIcon {
   border-radius: 0.25rem;
   display: grid;
   gap: 0.5rem;
+  align-content: center;
   min-width: 6.25rem;
-  padding: 2rem;
 }
 .container.playField .handDetails {
   align-items: center;
@@ -989,7 +1007,9 @@ header .currentChipTotal .plusIcon {
   align-items: center;
   background-color: var(--white);
   border: 2px solid var(--neutralGray);
+  border-radius: 0.5rem;
   display: grid;
+  font-size: 0.875rem;
   gap: 0.5rem;
   justify-content: center;
   padding: 1rem;

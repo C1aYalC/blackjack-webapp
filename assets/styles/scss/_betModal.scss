@@ -37,7 +37,7 @@
             .bet-modal-chip-balance {
                 align-items: center;
                 background-color: var(--primaryGoldLighten);
-                border-radius: .25rem;
+                border-radius: .5rem;
                 border: 2px solid var(--primaryGoldDarken);
                 color: var(--primaryGoldDarken);
                 display: flex;
@@ -107,16 +107,28 @@
             .bet-input-container {
                 display: grid;
                 gap: .5rem;
-                grid-template-columns: auto max-content;
 
                 input {
                     background-color: var(--white);
                     border: 2px solid var(--neutralGray);
-                    font-weight: 600;
-                    padding: 1rem .5rem;
+                    border-radius: .5rem;
+                    font-weight: 700;
+                    padding: 1rem;
+                    text-align: center;
 
                     &:placeholder-shown {
                         color: var(--neutralGray);
+                        font-weight: 500;
+                    }
+                }
+
+                .betModalButtonContainer {
+                    display: grid;
+                    gap: .5rem;
+                    grid-template-columns: 1fr 1fr;
+
+                    button {
+                        align-content: center;
                     }
                 }
             }
