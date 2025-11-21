@@ -114,7 +114,7 @@ header {
                 .card {
                     align-items: center;
                     background-color: var(--primaryGreenDarken75);
-                    border-radius: .5rem;
+                    border-radius: 1rem;
                     border: 2px solid var(--primaryGreen);
                     display: grid;
                     font-size: 2rem;
@@ -136,7 +136,7 @@ header {
 
                     .playingCard {
                         align-self: stretch;
-                        border-radius: .25rem;
+                        border-radius: .5rem;
                         display: grid;
                         gap: .5rem;
                         align-content: center;
@@ -164,7 +164,7 @@ header {
 
                 &.sectionCardTotal {
                     background-color: var(--primaryGold);
-                    border-radius: .25rem 1.5rem 1.5rem .25rem;
+                    border-radius: 1.5rem;
                     color: var(--primaryGoldDarken);
                     display: flex;
                     gap: .5rem;
@@ -172,8 +172,6 @@ header {
                 }
 
                 &.sectionLabel {
-                    background-color: var(--primaryGreen);
-                    border-radius: 1.5rem .25rem .25rem 1.5rem;
                     color: var(--offWhite);
                 }
             }
@@ -260,6 +258,10 @@ header {
 
     &.playerArea {
         background-color: var(--primaryGreenDarken);
+
+        .sectionLabel {
+            order: 2;
+        }
     }
 }
 

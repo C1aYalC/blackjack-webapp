@@ -996,7 +996,7 @@ header .currentChipTotal .plusIcon {
 .container.playField .cardsContainer .cardContainer .card {
   align-items: center;
   background-color: var(--primaryGreenDarken75);
-  border-radius: 0.5rem;
+  border-radius: 1rem;
   border: 2px solid var(--primaryGreen);
   display: grid;
   font-size: 2rem;
@@ -1016,7 +1016,7 @@ header .currentChipTotal .plusIcon {
 }
 .container.playField .cardsContainer .cardContainer .card .playingCard {
   align-self: stretch;
-  border-radius: 0.25rem;
+  border-radius: 0.5rem;
   display: grid;
   gap: 0.5rem;
   align-content: center;
@@ -1040,15 +1040,13 @@ header .currentChipTotal .plusIcon {
 }
 .container.playField .handDetails div.sectionCardTotal {
   background-color: var(--primaryGold);
-  border-radius: 0.25rem 1.5rem 1.5rem 0.25rem;
+  border-radius: 1.5rem;
   color: var(--primaryGoldDarken);
   display: flex;
   gap: 0.5rem;
   justify-content: center;
 }
 .container.playField .handDetails div.sectionLabel {
-  background-color: var(--primaryGreen);
-  border-radius: 1.5rem 0.25rem 0.25rem 1.5rem;
   color: var(--offWhite);
 }
 .container.playerActions {
@@ -1118,6 +1116,9 @@ header .currentChipTotal .plusIcon {
 }
 .container.playerArea {
   background-color: var(--primaryGreenDarken);
+}
+.container.playerArea .sectionLabel {
+  order: 2;
 }
 
 @media (min-width: 768px) {
