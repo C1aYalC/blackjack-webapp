@@ -694,8 +694,8 @@ function showSecretBalanceModal() {
                 } catch (e) {}
             };
 
-            if (closeBtn) closeBtn.addEventListener('click', () => { modalEl.classList.remove('active'); setTimeout(restoreBetModal, 350); });
-            if (cancelBtn) cancelBtn.addEventListener('click', () => { modalEl.classList.remove('active'); setTimeout(restoreBetModal, 350); });
+            if (closeBtn) closeBtn.addEventListener('click', () => { modalEl.classList.remove('active'); setTimeout(restoreBetModal, 60); });
+            if (cancelBtn) cancelBtn.addEventListener('click', () => { modalEl.classList.remove('active'); setTimeout(restoreBetModal, 60); });
             if (submitBtn) submitBtn.addEventListener('click', () => {
                 const raw = (inputEl && inputEl.value ? inputEl.value : '').replace(/,/g, '').trim();
                 const num = parseInt(raw, 10);
@@ -711,7 +711,7 @@ function showSecretBalanceModal() {
                 modalEl.classList.remove('active');
                 // Delay restore slightly so CSS hide transition can finish and
                 // the browser can update layout before the bet modal becomes active again.
-                setTimeout(restoreBetModal, 350);
+                setTimeout(restoreBetModal, 60);
             });
             modalEl.dataset.wired = '1';
         }
@@ -727,7 +727,8 @@ function showSecretBalanceModal() {
         if (showModal) {
             showModal.classList.add('active');
             // Increase the focus delay and also try selecting and scrolling the input
-            // into view. Mobile browsers are picky; a slightly longer delay often helps.
+            // into view. Mobile browsers are picky; a short delay helps while keeping
+            // the transition snappy on mobile.
             setTimeout(() => {
                 const i = document.getElementById('secret-balance-input');
                 try {
