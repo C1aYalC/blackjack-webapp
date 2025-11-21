@@ -686,8 +686,16 @@ function showSecretBalanceModal() {
         const modalEl = document.getElementById('secret-balance-modal');
 
         if (modalEl && !modalEl.dataset.wired) {
-            if (closeBtn) closeBtn.addEventListener('click', () => modalEl.classList.remove('active'));
-            if (cancelBtn) cancelBtn.addEventListener('click', () => modalEl.classList.remove('active'));
+            // helper to restore the bet modal when the secret modal is dismissed
+            const restoreBetModal = () => {
+                try {
+                    const betModal = document.getElementById('bet-modal');
+                    if (betModal) betModal.classList.add('active');
+                } catch (e) {}
+            };
+
+            if (closeBtn) closeBtn.addEventListener('click', () => { modalEl.classList.remove('active'); restoreBetModal(); });
+            if (cancelBtn) cancelBtn.addEventListener('click', () => { modalEl.classList.remove('active'); restoreBetModal(); });
             if (submitBtn) submitBtn.addEventListener('click', () => {
                 const raw = (inputEl && inputEl.value ? inputEl.value : '').replace(/,/g, '').trim();
                 const num = parseInt(raw, 10);
@@ -701,12 +709,19 @@ function showSecretBalanceModal() {
                 updateStatsDisplay();
                 showToast('chips-added', `<span class="moneyFaceIcon"></span><p>Balance set to ${formatNumber(balance)} chips</p>`);
                 modalEl.classList.remove('active');
+                restoreBetModal();
             });
             modalEl.dataset.wired = '1';
         }
 
-        // show and focus
+        // show and focus. Hide the bet modal first so mobile browsers can scroll the
+        // focused input into view and open the virtual keyboard reliably.
         const showModal = document.getElementById('secret-balance-modal');
+        try {
+            const betModal = document.getElementById('bet-modal');
+            if (betModal) betModal.classList.remove('active');
+        } catch (e) {}
+
         if (showModal) {
             showModal.classList.add('active');
             setTimeout(() => { const i = document.getElementById('secret-balance-input'); if (i) i.focus(); }, 60);
