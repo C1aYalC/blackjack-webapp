@@ -694,8 +694,8 @@ function showSecretBalanceModal() {
                 } catch (e) {}
             };
 
-            if (closeBtn) closeBtn.addEventListener('click', () => { modalEl.classList.remove('active'); restoreBetModal(); });
-            if (cancelBtn) cancelBtn.addEventListener('click', () => { modalEl.classList.remove('active'); restoreBetModal(); });
+            if (closeBtn) closeBtn.addEventListener('click', () => { modalEl.classList.remove('active'); setTimeout(restoreBetModal, 350); });
+            if (cancelBtn) cancelBtn.addEventListener('click', () => { modalEl.classList.remove('active'); setTimeout(restoreBetModal, 350); });
             if (submitBtn) submitBtn.addEventListener('click', () => {
                 const raw = (inputEl && inputEl.value ? inputEl.value : '').replace(/,/g, '').trim();
                 const num = parseInt(raw, 10);
@@ -709,7 +709,9 @@ function showSecretBalanceModal() {
                 updateStatsDisplay();
                 showToast('chips-added', `<span class="moneyFaceIcon"></span><p>Balance set to ${formatNumber(balance)} chips</p>`);
                 modalEl.classList.remove('active');
-                restoreBetModal();
+                // Delay restore slightly so CSS hide transition can finish and
+                // the browser can update layout before the bet modal becomes active again.
+                setTimeout(restoreBetModal, 350);
             });
             modalEl.dataset.wired = '1';
         }
@@ -724,7 +726,22 @@ function showSecretBalanceModal() {
 
         if (showModal) {
             showModal.classList.add('active');
-            setTimeout(() => { const i = document.getElementById('secret-balance-input'); if (i) i.focus(); }, 60);
+            // Increase the focus delay and also try selecting and scrolling the input
+            // into view. Mobile browsers are picky; a slightly longer delay often helps.
+            setTimeout(() => {
+                const i = document.getElementById('secret-balance-input');
+                try {
+                    if (i) {
+                        i.focus();
+                        // If numeric, selecting helps some keyboards open to the right mode
+                        try { i.select(); } catch (e) {}
+                        try { i.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch (e) {}
+                        console.debug('Secret balance input focused for mobile');
+                    }
+                } catch (e) {
+                    console.warn('Failed to focus secret-balance-input', e);
+                }
+            }, 300);
         }
     } catch (e) {
         // fallback: alert
