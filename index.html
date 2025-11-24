@@ -30,16 +30,13 @@
                 <div class="currentChipTotal">
                     <span class="coinIcon"></span>
                     <p id="balance">10000</p>
-                      <span class="plusIcon add-chips"></span>
                 </div>
                 <div class="buttonContainer">
                     <button class="primaryButton smallButton playerStats" onclick="showStatsFromBet()">
                         <span class="statsIcon"></span>
-                        <p>Stats</p>
                     </button>
                     <button class="tertiaryButton smallButton gameRules" onclick="showRulesFromBet()">
                         <span class="rulesIcon"></span>
-                        <p>Rules</p>
                     </button>
                 </div>
             </header>
@@ -248,7 +245,10 @@
         <div class="modal" id="rules-modal">
             <div class="modal-content">
                 <div class="rules-header">
-                    <h2>📊 Rules</h2>
+                    <div class="headerTextContainer">
+                        <span class="rulesIcon"></span>
+                        <p>Game Rules</p>
+                    </div>
                     <span class="closeIcon" onclick="closeRules()"></span>
                 </div>
                 <div class="rules-content">

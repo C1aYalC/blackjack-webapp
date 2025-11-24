@@ -3,6 +3,7 @@
 @use '../scss/buttons';
 @use '../scss/icons';
 @use '../scss/betModal';
+@use '../scss/rulesModal';
 @use '../scss/statsModal';
 @use '../scss/toast';
 @use '../scss/deleteData';
@@ -43,6 +44,10 @@ header {
         display: grid;
         gap: .5rem;
         grid-template-columns: 1fr 1fr;
+
+        button {
+            grid-template-columns: auto;
+        }
     }
 
     .currentChipTotal {

@@ -501,6 +501,62 @@ span::before {
     max-width: 40vw;
   }
 }
+#rules-modal .modal-content {
+  border-radius: 0.5rem;
+}
+#rules-modal .rules-header {
+  background-color: var(--primaryGreenDarken);
+  border-radius: 0.5rem 0.5rem 0 0;
+  color: var(--offWhite);
+  display: grid;
+  font-size: 1.5rem;
+  grid-template-columns: auto max-content;
+  padding: 1rem;
+}
+#rules-modal .rules-header .headerTextContainer {
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: max-content max-content;
+}
+#rules-modal .rules-header .headerTextContainer p {
+  font-family: var(--headingFontFamily);
+}
+#rules-modal .stats-grid {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+}
+#rules-modal .stats-grid .statsDivider {
+  background-color: var(--primaryGreenDarken);
+  border-radius: 0.5rem;
+  height: 2px;
+}
+#rules-modal .stats-grid .stats-item {
+  align-items: center;
+  display: grid;
+  grid-template-columns: max-content auto max-content;
+  gap: 1rem;
+}
+#rules-modal .stats-grid .stats-item hr {
+  border-top: 2px solid var(--neutralGray);
+  height: 2px;
+}
+#rules-modal .stats-grid .stats-item p {
+  font-weight: 700;
+}
+#rules-modal .stats-grid .stats-item p.negative {
+  color: var(--accentColor);
+}
+#rules-modal .stats-grid .stats-item p.positive {
+  color: var(--primaryGreen);
+}
+#rules-modal .stats-grid .stats-item .statsLabel {
+  align-items: center;
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: auto max-content;
+}
+
 #stats-modal .modal-content {
   border-radius: 0.5rem;
 }
@@ -934,6 +990,9 @@ header .buttonContainer {
   display: grid;
   gap: 0.5rem;
   grid-template-columns: 1fr 1fr;
+}
+header .buttonContainer button {
+  grid-template-columns: auto;
 }
 header .currentChipTotal {
   align-items: center;
