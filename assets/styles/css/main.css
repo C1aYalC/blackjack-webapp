@@ -469,7 +469,6 @@ span::before {
   background: var(--offWhite);
   border-radius: 0.5rem;
   position: relative;
-  text-align: center;
   width: calc(100vw - 1rem);
 }
 @keyframes fadeIn {
@@ -521,40 +520,21 @@ span::before {
 #rules-modal .rules-header .headerTextContainer p {
   font-family: var(--headingFontFamily);
 }
-#rules-modal .stats-grid {
+#rules-modal .rules-content {
   display: grid;
   gap: 1rem;
   padding: 1rem;
 }
-#rules-modal .stats-grid .statsDivider {
-  background-color: var(--primaryGreenDarken);
-  border-radius: 0.5rem;
-  height: 2px;
-}
-#rules-modal .stats-grid .stats-item {
-  align-items: center;
+#rules-modal .rules-content .rulesItem {
   display: grid;
-  grid-template-columns: max-content auto max-content;
-  gap: 1rem;
+  gap: 0.25rem;
 }
-#rules-modal .stats-grid .stats-item hr {
-  border-top: 2px solid var(--neutralGray);
-  height: 2px;
+#rules-modal .rules-content .rulesItem .heading {
+  font-family: var(--headingFontFamily);
+  font-size: 1.25rem;
 }
-#rules-modal .stats-grid .stats-item p {
+#rules-modal .rules-content .rulesItem strong {
   font-weight: 700;
-}
-#rules-modal .stats-grid .stats-item p.negative {
-  color: var(--accentColor);
-}
-#rules-modal .stats-grid .stats-item p.positive {
-  color: var(--primaryGreen);
-}
-#rules-modal .stats-grid .stats-item .statsLabel {
-  align-items: center;
-  display: grid;
-  gap: 0.5rem;
-  grid-template-columns: auto max-content;
 }
 
 #stats-modal .modal-content {
@@ -993,6 +973,8 @@ header .buttonContainer {
 }
 header .buttonContainer button {
   grid-template-columns: auto;
+  padding-right: 1.25rem;
+  padding-left: 1.25rem;
 }
 header .currentChipTotal {
   align-items: center;

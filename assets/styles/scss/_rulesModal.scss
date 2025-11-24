@@ -24,45 +24,22 @@
         }
     }
 
-    .stats-grid {
+    .rules-content {
         display: grid;
         gap: 1rem;
         padding: 1rem;
 
-        .statsDivider {
-            background-color: var(--primaryGreenDarken);
-            border-radius: .5rem;
-            height: 2px;
-        }
-
-        .stats-item {
-            align-items: center;
+        .rulesItem {
             display: grid;
-            grid-template-columns: max-content auto max-content;
-            gap: 1rem;
+            gap: .25rem;
 
-            hr {
-                border-top: 2px solid var(--neutralGray);
-                height: 2px;
+            .heading {
+                font-family: var(--headingFontFamily);
+                font-size: 1.25rem;
             }
-            
-            p {
+
+            strong {
                 font-weight: 700;
-
-                &.negative {
-                    color: var(--accentColor);
-                }
-
-                &.positive {
-                    color: var(--primaryGreen);
-                }
-            }
-
-            .statsLabel {
-                align-items: center;
-                display: grid;
-                gap: .5rem;
-                grid-template-columns: auto max-content;
             }
         }
     }
