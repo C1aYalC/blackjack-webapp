@@ -76,7 +76,15 @@ button {
     }
 
     &.quaternaryButton {
-        background-color: var(--offBlack);
+        background: linear-gradient(180deg, var(--offBlack) 50%, var(--black) 100%);
+        border: 2px solid var(--black);
+        box-shadow: inset 0px 2px 2px rgba(255, 255, 255, .35);
+        color: var(--offWhite);
+        text-shadow: 0 -1px 1px var(--black);
+        
+        &:hover {
+            background: var(--offBlack);
+        }
     }
 
     &:disabled {

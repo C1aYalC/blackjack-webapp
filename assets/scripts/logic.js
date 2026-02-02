@@ -1086,7 +1086,7 @@ function deleteAllData() {
         
         // Show success
         deletingSpinner.style.display = 'none';
-        deletingText.innerHTML = '<div class="delete-success">✓</div><div style="color: white; margin-top: 10px;">Data Deleted Successfully</div>';
+        deletingText.innerHTML = '<span class="dataDelete checkIcon"></span><div style="color: white; margin-top: 10px;">Data Deleted Successfully</div>';
         
         // Hide modal and reset after delay
         setTimeout(() => {
@@ -1095,8 +1095,8 @@ function deleteAllData() {
             deletingText.innerHTML = 'Deleting player data...';
             document.getElementById('slide-confirm').classList.remove('active');
             resetSlider();
-        }, 1500);
-    }, 1500);
+        }, 2000);
+    }, 2000);
 }
 
 // Slide to delete functionality
